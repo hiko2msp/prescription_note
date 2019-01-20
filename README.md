@@ -2,26 +2,23 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
 
-## Development server
+お薬手帳のアプリ
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## 開発サーバの立ち上げ方法
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`ng serve`をつかってサーバを起動します。`http://localhost:4200/`にアクセスをして、ブラウザ上で動作確認することができます
+
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+`ng build`でsrc以下のフォルダの物をつかってwwwフォルダ以下にファイルを生成しました
 
-## Running unit tests
+## 単体テストの実行
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`ng test` を実行すると [Karma](https://karma-runner.github.io) をつかったテストが起動します
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+`ng e2e` を実行すると [Protractor](http://www.protractortest.org/) をつかったテストが起動します
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
