@@ -8,4 +8,8 @@ import { MainTabComponent } from './main-tab';
 })
 export class AppComponent {
   page = MainTabComponent;
+
+  isSmartPhone() {
+    return /iPad|iPhone|Android/i.test(navigator.userAgent);
+  }
 }
