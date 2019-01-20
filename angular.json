@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/prescription",
+            "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,6 +27,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/onsenui/css/onsenui.css",
+              "node_modules/onsenui/css/onsen-css-components.css",
               "src/styles.scss"
             ],
             "scripts": []
