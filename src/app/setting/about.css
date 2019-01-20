@@ -1,0 +1,13 @@
+/* About CSS */
+.center{
+  text-align:center;
+}
+
+.version,.release-note{
+  margin-bottom:2rem;
+  text-align: center;
+}
+
+.heading{
+  font-weight: bold;
+}

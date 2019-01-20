@@ -20,7 +20,9 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "cordova-ios": "^4.5.5",
+    "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-sqlite-storage": "2.6.0",
     "core-js": "^2.5.4",
     "ngx-onsenui": "^7.0.0",
     "onsenui": "^2.10.6",
@@ -51,7 +53,9 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-camera": {},
+      "cordova-sqlite-storage": {}
     },
     "platforms": [
       "ios"

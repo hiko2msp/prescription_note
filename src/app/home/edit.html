@@ -1,0 +1,32 @@
+<p (click)="onCloseClicked()">
+  <ons-icon
+  icon="fa-backward"
+  size="30px"
+  fixed-width="false"
+  style="color: red">
+  </ons-icon>
+</p>
+
+<p>編集画面</p>
+
+<p>
+<label>Date:
+  <input placeholder="2018/01/01">
+</label>
+</p>
+
+<p>
+<label>Memo:
+  <input placeholder="memo">
+</label>
+</p>
+
+<p>
+  <img src="{{get_list.img2}}" (click)="onImgChange()">
+</p>
+
+<p (click)="onEditEndClicked()">
+  <ons-button modifier="large--cta">
+    登録
+  </ons-button>
+</p>

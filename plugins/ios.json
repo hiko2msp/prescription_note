@@ -9,6 +9,12 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.gmail.hiko2msp.apple"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.gmail.hiko2msp.apple"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.gmail.hiko2msp.apple"
     }
   },
   "dependent_plugins": {}
