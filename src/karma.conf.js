@@ -25,7 +25,16 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+//    browsers: ['Chrome'],
+    browsers: ['CustomChromeHeadless'],
+    customLaunchers: {
+      CustomChromeHeadless: {
+        base: 'ChromeHeadless',
+        // --disable-web-security はログをわかりやすくするため
+        // https://qiita.com/sue71/items/885caeedb02ae6dc48c4
+        flags: ['--no-sandbox', '--disable-web-security']
+      }
+    },
+    singleRun: true
   });
 };
