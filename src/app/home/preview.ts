@@ -30,10 +30,12 @@ export class PreviewComponent {
     get_data_from_db_table() {
       console.log('get_data_from_db_table');
       // numからtableの情報を取ってきて代入してHTMLに表示
-      this.get_list.img1 = 'assets/img/test.jpeg';
-      this.get_list.date_str = 'No.1 Date: 2018/12/13';
-      this.get_list.memo_str = 'メモテスト';
-      this.get_list.img2 = 'assets/img/test.jpeg';
+      this.get_list = {
+        img1: 'assets/img/test.jpeg',
+        date_str: 'No.1 Date: 2018/12/13',
+        memo_str: 'メモテスト',
+        img2: 'assets/img/test.jpeg',
+      } as ListData;
     }
 
     onEditClicked() {
