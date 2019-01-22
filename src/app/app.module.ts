@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainTabComponent } from './main-tab';
+import { MainTabComponent, BrowserCameraComponent } from './main-tab';
 import { HomeComponent } from './home/home';
 import { EditComponent } from './home/edit';
 import { PreviewComponent } from './home/preview';
@@ -20,6 +20,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 const components = [
     AppComponent,
     MainTabComponent,
+    BrowserCameraComponent,
     HomeComponent,
     EditComponent,
     PreviewComponent,

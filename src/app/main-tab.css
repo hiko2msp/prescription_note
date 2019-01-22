@@ -1,0 +1,10 @@
+.not-preview { display: none; }
+
+.camera {
+    width: 100%;
+    height: auto;
+}
+.preview {
+    width: 100%;
+    height: auto;
+}
