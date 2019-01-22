@@ -9,6 +9,7 @@ import {AboutComponent} from './about';
     <div class="left" (click)="onCloseClicked()"><ons-toolbar-button><ons-icon icon="fa-times"></ons-icon></ons-toolbar-button></div>
     <div class="center">個人情報設定</div>
   </ons-toolbar>
+  個人情報設定は追加予定です
   `,
 })
 export class AccountComponent {

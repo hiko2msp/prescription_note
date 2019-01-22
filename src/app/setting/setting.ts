@@ -23,6 +23,6 @@ export class SettingComponent {
   }
 
   onInquiryClicked() {
-    this._navigator.element.pushPage(InquiryComponent, {animation: 'lift'});
+    this._navigator.element.pushPage(InquiryComponent, {animation: 'simpleslide'});
   }
 }
