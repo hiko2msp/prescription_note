@@ -13,8 +13,7 @@ import {Datas} from './list_data_sample'
 })
 export class Preview {
 
-    item: ListData[];
-    get_list: ListData[] = Datas;
+    item: ListData;
 
     constructor(
       private _navigator: OnsNavigator,
@@ -22,17 +21,6 @@ export class Preview {
     ) {
       this.item = params.data;
       console.log("params.data : " + this.item.date_str);
-      this.get_data_from_db_table(this.item);
-    }
-
-    // edit.tsでも流用
-    get_data_from_db_table(item) {
-      console.log("get_data_from_db_table");
-      // itemからtableの情報を取ってきて代入してHTMLに表示
-      this.get_list.img1 = item.img1;
-      this.get_list.date_str = item.date_str;
-      this.get_list.memo_str = item.memo_str;
-      this.get_list.img2 = item.img2;
     }
 
     onEditClicked(item) {

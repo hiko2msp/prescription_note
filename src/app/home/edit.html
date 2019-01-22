@@ -1,14 +1,4 @@
 <ons-toolbar [attr.modifier]="modifier">
-  <div class="left" (click)="onCloseClicked()">
-    <ons-toolbar-button>
-      <ons-icon
-      icon="fa-backward"
-      size="30px"
-      fixed-width="false"
-      style="color: red">
-      </ons-icon>
-    </ons-toolbar-button>
-  </div>
   <div class="center">編集（edit.html header）</div>
   <div class="right" (click)="onCloseClicked()">
     <ons-toolbar-button>
@@ -35,7 +25,7 @@
 </p>
 
 <p>
-  <img src="{{get_list.img2}}" (click)="onImgChange()">
+  <img src="{{item.img2}}" (click)="onImgChange()">
 </p>
 
 <p (click)="onEditEndClicked()">
