@@ -55,9 +55,9 @@ export class HomeComponent {
       .catch(error => console.log('error', error));
   }
 
-  onListClicked(num) {
-    console.log(`No.${num} List Clicked`);
-    this._navigator.element.pushPage(PreviewComponent, {animation: 'simpleslide', data: 1, }, );
+  onListClicked(item: ListData) {
+    console.log(`No.${item.date_str} List Clicked`);
+    this._navigator.element.pushPage(PreviewComponent, {animation: 'simpleslide', data: item, }, );
   }
 
 }

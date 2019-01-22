@@ -13,34 +13,20 @@ import {Datas} from './list_data_sample';
 })
 export class PreviewComponent {
 
-    num: number;
+    item: ListData;
 
-    get_list: ListData;
 
     constructor(
       private _navigator: OnsNavigator,
       private params: Params
     ) {
-      this.num = params.data;
-      console.log(params.data);
-      this.get_data_from_db_table();
+      this.item = params.data;
+      console.log('params.data : ' + this.item.date_str);
     }
 
-    // edit.tsでも流用
-    get_data_from_db_table() {
-      console.log('get_data_from_db_table');
-      // numからtableの情報を取ってきて代入してHTMLに表示
-      this.get_list = {
-        img1: 'assets/img/test.jpeg',
-        date_str: 'No.1 Date: 2018/12/13',
-        memo_str: 'メモテスト',
-        img2: 'assets/img/test.jpeg',
-      } as ListData;
-    }
-
-    onEditClicked() {
+    onEditClicked(item: ListData) {
       console.log('Edit Button Clicked');
-      this._navigator.element.pushPage(EditComponent, {animation: 'simpleslide', data: this.num, }, );
+      this._navigator.element.pushPage(EditComponent, {animation: 'simpleslide', data: this.item, }, );
     }
 
     onCloseClicked() {

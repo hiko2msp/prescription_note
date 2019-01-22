@@ -1,10 +1,6 @@
-<ons-list-header></ons-list-header>
-
-<p>Pattern 2</p>
-<p>最初から開いているバージョンも作る</p>
-<p>画像タッチで画面遷移</p>
-
-<hr />
+<ons-toolbar [attr.modifier]="modifier">
+  <div class="center">お薬手帳</div>
+</ons-toolbar>
 
 <ons-list-item expandable *ngFor="let item of list3">
   <div class="left">
@@ -15,6 +11,6 @@
     <span class="list-item__subtitle">{{item.memo_str}}</span>
   </div>
   <div class="expandable-content">
-    <img class="expandable-img" src="{{item.img2}}" (click)="onListClicked(1)">
+    <img class="expandable-img" src="{{item.img2}}" (click)="onListClicked(item)">
   </div>
 </ons-list-item>
