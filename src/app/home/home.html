@@ -2,23 +2,24 @@
   <div class="center">お薬手帳</div>
 </ons-toolbar>
 
-<ons-list-item expandable *ngFor="let item of list3">
+<ons-list-item expandable *ngFor="let item of list3" class="list-item">
 <!--  profileアイコンを一時的に非表示にしています。
   <div class="left">
     <img class="list-item__thumbnail" src="{{item.img1}}">
   </div>
 -->
-  <div class="center">
-    <div class="heading_container">
-      <div class="list-item__num">{{item.num_str}}</div>
-      <div class="list-item__date">{{item.date_str}}</div>
+  <div class="heading center">
+    <div class="heading-container">
+      <div class="heading-container__num">{{item.num_str}}</div>
+      <div class="heading-container__date">{{item.date_str}}</div>
     </div>
-    <span class="list-item__subtitle">{{item.memo_str}}</span>
+    
+    <span class="heading__memo">{{item.memo_str}}</span>
   </div>
   <div class="expandable-content">
-    <div class="img_container">
-      <img class="expandable-img" src="{{item.img2}}" (click)="onListClicked(item)">
-      <i class="far fa-eye"></i>
+    <div class="expandable-photo-container">
+      <img class="expandable-photo-container__photo" src="{{item.img2}}" (click)="onListClicked(item)">
+      <i class="expandable-photo-container__check-icon far fa-eye"></i>
     </div>
   </div>
 </ons-list-item>

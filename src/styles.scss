@@ -4,14 +4,14 @@
   background: #46AAFF;
   height: 45px;
 }
-.center.toolbar__center.toolbar__title {
+.toolbar__title {
   color: #fff;
   font-weight: bold;
   font-size: 18px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.16);
 }
 
-.list-item.list-item--expandable {
+.list-item--expandable {
   width: 90%;
   margin: 15px auto;
   background: #FFFFDB;
@@ -21,9 +21,7 @@
 /* Footer area  */
 .tabbar{
   height: 50px;
-  &.ons-tabbar__footer.ons-swiper-tabbar {
-    background: #46AAFF;
-  }
+  background: #46AAFF;
 }
 .tabbar__button {
   color: #fff;
