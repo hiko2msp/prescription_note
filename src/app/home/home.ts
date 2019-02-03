@@ -1,63 +1,68 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {
+    PrescriptionRecord,
+    PrescriptionRecordViewModel,
+    prescriptionRecordToViewModel
+} from '../prescription-record.model';
 import {PrescriptionRecordRepository} from '../../service/prescription-record.repository';
 import {OnsNavigator} from 'ngx-onsenui';
 import {PreviewComponent} from './preview';
-import {ListData} from './list_data';
-import {ListDatas} from './list_data_sample';
+import {Subscription} from 'rxjs';
+
 
 @Component({
-  selector: 'ons-page[home]',
-  templateUrl: './home.html',
-  styleUrls: [
-    './home.css'
-  ]
+    selector: 'ons-page[home]',
+    templateUrl: './home.html',
+    styleUrls: [
+        './home.css'
+    ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
 
-  list3: ListData[] = ListDatas;
+    subscriptions: Subscription[] = [];
+    items: PrescriptionRecordViewModel[] = [];
 
-  user_image = 'assets/img/test.jpeg';
-  big_image = 'assets/img/test.jpeg';
-  title = 'No.1 Date: 2018/12/13';
-  memo = '桜病院での処方';
+    user_image = 'assets/img/test.jpeg';
+    big_image = 'assets/img/test.jpeg';
+    title = 'No.1 Date: 2018/12/13';
+    memo = '桜病院での処方';
 
-  constructor(
-    private _navigator: OnsNavigator,
-    private _prescriptionRecordRepository: PrescriptionRecordRepository,
-  ) {
-    Promise.resolve()
-      .then(() =>
-        this._prescriptionRecordRepository.addRecord({
-            id: null,
-            createdDate: new Date(2017, 12, 12).toISOString(),
-            updatedDate: new Date(2017, 12, 13).toISOString(),
-            imagePath: '/tmp/path1',
-            note: 'test note',
-          }))
-      .then(() =>
-        this._prescriptionRecordRepository.addRecord({
-            id: null,
-            createdDate: new Date(2017, 12, 14).toISOString(),
-            updatedDate: new Date(2017, 12, 14).toISOString(),
-            imagePath: '/tmp/path2',
-            note: 'test note',
-          }))
-      .then(() =>
-        this._prescriptionRecordRepository.addRecord({
-            id: null,
-            createdDate: new Date(2017, 12, 15).toISOString(),
-            updatedDate: new Date(2017, 12, 15).toISOString(),
-            imagePath: '/tmp/path3',
-            note: 'test note',
-          }))
-      .then((result) => this._prescriptionRecordRepository.getRecords())
-      .then(result => console.log('record', result))
-      .catch(error => console.log('error', error));
-  }
+    constructor(
+        private _navigator: OnsNavigator,
+        private _prescriptionRecordRepository: PrescriptionRecordRepository,
+    ) {}
 
-  onListClicked(item: ListData) {
-    console.log(`No.${item.date_str} List Clicked`);
-    this._navigator.element.pushPage(PreviewComponent, {animation: 'simpleslide', data: item, }, );
-  }
+    ngOnInit() {
+        this._prescriptionRecordRepository
+            .addRecord({
+                id: null,
+                createdDate: new Date(2017, 12, 12).toISOString(),
+                updatedDate: new Date(2017, 12, 13).toISOString(),
+                imagePath: 'assets/img/test.jpeg',
+                note: 'test note',
+            })
+            .then(() => {
+                this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
+                    this.items = records.map(prescriptionRecordToViewModel);
+                });
+            })
+            .catch(error => console.log('error', error));
+        this.subscriptions.push(
+            this._prescriptionRecordRepository.recordStateChanged().subscribe(() => {
+                this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
+                    this.items = records.map(prescriptionRecordToViewModel);
+                });
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
+
+    onItemClicked(item: PrescriptionRecordViewModel) {
+        console.log(`No.${item.id} item Clicked`);
+        this._navigator.element.pushPage(PreviewComponent, { animation: 'simpleslide', data: item.id, });
+    }
 
 }
