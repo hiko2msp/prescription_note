@@ -9,7 +9,7 @@ import {ListDatas} from './list_data_sample';
   selector: 'ons-page[home]',
   templateUrl: './home.html',
   styleUrls: [
-    './home.css'
+    './home.scss'
   ]
 })
 export class HomeComponent {
