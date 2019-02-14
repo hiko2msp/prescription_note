@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
     selector: 'ons-page[home]',
     templateUrl: './home.html',
     styleUrls: [
-        './home.css'
+        './home.scss'
     ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
