@@ -24,8 +24,9 @@
 
 <div>
   <p>保存日：</p>
-  <p>{{item.date_str}}</p>
-  <img class="preview_img" src="{{item.img2}}">
-  <p>メモ：</p>
-  <p>{{item.memo_str}}</p>
+  <p>{{(item$ | async).date | date:'yyyy年MM月dd日 hh:mm'}}</p>
+  <img class="preview_img" src="{{(item$ | async).image}}">
+  <p>メモ：</p> <p>{{(item$ | async).memo}}</p>
 </div>
+
+<ons-button (click)="onDeleteClicked()" modifier="large" style="background-color: red">削除</ons-button>
