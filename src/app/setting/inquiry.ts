@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {OnsNavigator} from 'ngx-onsenui'
+import {OnsNavigator} from 'ngx-onsenui';
 import { DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({

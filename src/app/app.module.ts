@@ -14,6 +14,7 @@ import { AccountComponent } from './setting/account';
 import { InquiryComponent } from './setting/inquiry';
 import { SettingComponent } from './setting/setting';
 import { SettingMainComponent } from './setting/setting-main';
+import { RegulationComponent } from './setting/regulation/regulation.component';
 import { PrescriptionRecordRepository } from '../service/prescription-record.repository';
 import { OnsenModule } from 'ngx-onsenui';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -31,6 +32,7 @@ const components = [
     InquiryComponent,
     SettingComponent,
     SettingMainComponent,
+    RegulationComponent,
 ];
 
 @NgModule({
