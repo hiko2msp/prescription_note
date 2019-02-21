@@ -3,30 +3,37 @@
     <ons-toolbar-button>
       <ons-icon
         icon="fa-backward"
-        size="30px"
+        size="50px"
         fixed-width="false"
-        style="color: gray">
+        style="color: white">
       </ons-icon>
     </ons-toolbar-button>
   </div>
-  <div class="center">プレビュー</div>
+  <div class="center">No. {{(item$ | async).id}}</div>
   <div class="right" (click)="onEditClicked()">
     <ons-toolbar-button>
       <ons-icon
         icon="fa-edit"
-        size="30px"
+        size="50px"
         fixed-width="false"
-        style="color: gray">
+        style="color: white">
       </ons-icon>
     </ons-toolbar-button>
   </div>
 </ons-toolbar>
 
-<div>
-  <p>保存日：</p>
-  <p>{{(item$ | async).date | date:'yyyy年MM月dd日 hh:mm'}}</p>
-  <img class="preview_img" src="{{(item$ | async).image}}">
-  <p>メモ：</p> <p>{{(item$ | async).memo}}</p>
-</div>
+<div class="previewContents">
+  <dl class="definitionList">
+    <dt class="definitionList__term">メモ</dt>
+    <dd class="definitionList__description">{{(item$ | async).memo}}</dd>
 
-<ons-button (click)="onDeleteClicked()" modifier="large" style="background-color: red">削除</ons-button>
+    <dt class="definitionList__term">保存日</dt>
+    <dd class="definitionList__description">{{(item$ | async).date | date:'yyyy年MM月dd日 hh:mm'}}</dd>
+  </dl>
+
+  <div class="imgPreview">
+    <img class="imgPreview__img" src="{{(item$ | async).image}}">
+  </div>
+
+  <ons-button class="deleteButton" (click)="onDeleteClicked()" modifier="large">削除</ons-button>
+</div>

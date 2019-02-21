@@ -10,7 +10,7 @@ import * as op from 'rxjs/operators';
     selector: 'ons-page[preview]',
     templateUrl: './preview.html',
     styleUrls: [
-        './preview.css'
+        './preview.scss'
     ]
 })
 export class PreviewComponent implements OnInit, OnDestroy {
