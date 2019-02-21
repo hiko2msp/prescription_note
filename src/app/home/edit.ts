@@ -11,7 +11,7 @@ const TOAST_TIMEOUT = 2000; // 2000msec
     selector: 'ons-page[edit]',
     templateUrl: './edit.html',
     styleUrls: [
-        './edit.css'
+        './edit.scss'
     ]
 })
 export class EditComponent implements OnInit {
