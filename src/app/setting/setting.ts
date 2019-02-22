@@ -3,6 +3,7 @@ import {OnsNavigator} from 'ngx-onsenui';
 import {AboutComponent} from './about';
 import {InquiryComponent} from './inquiry';
 import {AccountComponent} from './account';
+import {RegulationComponent} from './regulation/regulation.component';
 
 @Component({
   selector: 'ons-page[setting]',
@@ -24,5 +25,9 @@ export class SettingComponent {
 
   onInquiryClicked() {
     this._navigator.element.pushPage(InquiryComponent, {animation: 'simpleslide'});
+  }
+
+  onRegulationClicked(){
+    this._navigator.element.pushPage(RegulationComponent, {animation: 'simpleslide'});
   }
 }
