@@ -1,0 +1,58 @@
+/* Edit  */
+/* page__content  */
+.previewContents{
+  background: #FFF5FF;
+  padding: 1em 2em;
+  height: 100%;
+}
+.inputHeading{
+  color: #FF6B2A;
+  font-weight: bold;
+  margin-bottom: .5em;
+  display: block;
+
+  &:before{
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: #FF6B2A;
+    margin: 0 5px -2px 0;
+  }
+}
+
+.inputArea{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+textarea{
+  height: 5em;
+}
+
+.imgPreview{
+  text-align: center;
+  margin: 2em auto;
+  position: relative;
+
+  .imgPreview__img {
+    width: 100%;
+  }
+
+  .imgPreview__edit-icon{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #fff;
+    font-size: 1.4em;
+    text-shadow: 1px 1px 4px black;
+  }
+}
+
+.updateButton{
+  width: 100%;
+  margin: 2em auto;
+}
+

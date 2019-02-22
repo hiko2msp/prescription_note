@@ -6,30 +6,31 @@
       icon="fa-times"
       size="30px"
       fixed-width="false"
-      style="color: gray">
+      style="color: white">
       </ons-icon>
     </ons-toolbar-button>
   </div>
 </ons-toolbar>
 
-<p>
-<label>Date:
-  <input placeholder="2018/01/01">
-</label>
-</p>
+<div class="previewContents">
+  <p>
+    <label class="inputHeading" for="memo">メモ</label>
+    <textarea id="memo" class="inputArea">{{item.memo}}</textarea>
+  </p>
 
-<p>
-<label>Memo:
-  <input placeholder="memo">
-</label>
-</p>
+  <p>
+    <label class="inputHeading" for="addDate">保存日</label>
+    <input id="addDate" class="inputArea" type="text" value="{{item.date | date:'yyyy年MM月dd日 hh:mm'}}">
+  </p>
 
-<p>
-  <img src="{{item.image}}" (click)="onImgChange()">
-</p>
+  <div class="imgPreview">
+    <img class="imgPreview__img" src="{{item.image}}" (click)="onImgChange()">
+     <i class="imgPreview__edit-icon far fa-edit" (click)="onImgChange()"></i>
+  </div>
 
-<p (click)="onEditEndClicked()">
-  <ons-button modifier="large--cta">
-    登録
-  </ons-button>
-</p>
+  <p class="updateButton" (click)="onEditEndClicked()">
+    <ons-button modifier="large--cta">
+      更新
+    </ons-button>
+  </p>
+</div>
