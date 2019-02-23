@@ -4,13 +4,24 @@
   <meta charset="utf-8">
   <title>Prescription</title>
   <base href="./">
-
-      <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-eval' 'unsafe-inline' gap://ready file:; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' filesystem: data: blob:;" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 </head>
-<body>
+<!-- <body onload="onLoad()">
+  <script>
+    function onLoad() {
+      document.addEventListener("deviceready",onDeviceReady,false);
+    }
+    function onDeviceReady() {
+      console.log("deviceready");
+      alert((navigator as any).camera);
+      alert("index.html");
+    }
+  </script> -->
   <app-root></app-root>
 </body>
 </html>

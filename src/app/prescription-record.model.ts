@@ -16,6 +16,14 @@ export interface PrescriptionRecordViewModel {
 }
 
 export function prescriptionRecordToViewModel(record: PrescriptionRecord): PrescriptionRecordViewModel {
+    if(!record){
+      return {
+        id: 4,
+        date: moment().toDate(),
+        image: '',
+        memo: '',
+      };
+    }
     return {
         id: record.id,
         date: moment(record.createdDate).toDate(),

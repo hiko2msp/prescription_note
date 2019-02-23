@@ -7,7 +7,7 @@ import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
 import {prescriptionRecordToViewModel} from './prescription-record.model';
 import {BrowserCameraComponent} from './browser-camera.component';
-import { PrescriptionRecord } from './prescription-record.model';
+import {PrescriptionRecord} from './prescription-record.model';
 import {PreviewComponent} from './home/preview';
 import {EditComponent} from './home/edit';
 
@@ -28,11 +28,29 @@ export class MainTabComponent {
     ) { }
 
     onPlusButtonClick(event: Event) {
+
+        function onDeviceReady() {
+          console.log("deviceready");
+          console.log((navigator as any).camera);
+        }
+
+        document.addEventListener("deviceready",onDeviceReady,false);
+
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
 
-        if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
+        console.log(Object.keys(navigator));
+        console.log(navigator);
+        console.log(window.navigator);
+
+        // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
+        if (true) {
+          document.addEventListener('deviceready',()=>{
+            console.log('camera in');
+            // ここでundefinedになるので解決しないとカメラ使えない
+            console.log((navigator as any).camera);
+
             (navigator as any).camera.getPicture(
                 (imageURI) => {
                     // this.addPictureFile(imageURI);
@@ -43,9 +61,10 @@ export class MainTabComponent {
                     destinationType: (navigator as any).camera.DestinationType.DATA_URL,
                 }
             );
+          },{once: true,});
         } else {
             const imageURI = 'click : ' + new Date();
-            this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
+            // this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
         }
     }
 
