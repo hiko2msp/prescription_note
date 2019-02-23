@@ -16,6 +16,7 @@ export interface PrescriptionRecordViewModel {
 }
 
 export function prescriptionRecordToViewModel(record: PrescriptionRecord): PrescriptionRecordViewModel {
+    // recordがundefineでエラーが出るのを防ぐため仮に入れておく
     if(!record){
       return {
         id: 4,

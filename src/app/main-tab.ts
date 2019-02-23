@@ -40,15 +40,11 @@ export class MainTabComponent {
         const ua = navigator.userAgent;
         console.log(ua);
 
-        console.log(Object.keys(navigator));
-        console.log(navigator);
-        console.log(window.navigator);
-
+        // とりあえずtrueにしているだけ
         // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
         if (true) {
           document.addEventListener('deviceready',()=>{
             console.log('camera in');
-            // ここでundefinedになるので解決しないとカメラ使えない
             console.log((navigator as any).camera);
 
             (navigator as any).camera.getPicture(
@@ -61,10 +57,10 @@ export class MainTabComponent {
                     destinationType: (navigator as any).camera.DestinationType.DATA_URL,
                 }
             );
-          },{once: true,});
+          },{once: true,}); // for prevention of memory leak
         } else {
             const imageURI = 'click : ' + new Date();
-            // this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
+            this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
         }
     }
 
