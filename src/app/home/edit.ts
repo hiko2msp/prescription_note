@@ -53,14 +53,14 @@ export class EditComponent implements OnInit {
     onEditEndClicked() {
         // 入力された時刻を取得してtoISOStringの形式にする
         let addDate = document.getElementById("addDate") as HTMLTextAreaElement;
-        let createdDate = addDate.value.replace(/(\d{4})年(\d{2})月(\d{2})日/g,"$1-$2-$3");
+        console.log("addDate -> "+ addDate.value);
 
         // memoの部分を取得する
         let memoText = document.getElementById("memo") as HTMLTextAreaElement;
 
         this._prescriptionRecordRepository.updateRecord({
             id: this.item.id,
-            createdDate: new Date(createdDate).toISOString(),
+            createdDate: new Date(addDate.value).toISOString(),
             updatedDate: new Date().toISOString(),
             imagePath: this.item.image,
             note: String(memoText.value),
