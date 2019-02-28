@@ -25,5 +25,6 @@
     </platform>
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
+    <plugin name="cordova-plugin-email" spec="^1.2.7" />
     <engine name="ios" spec="^4.5.5" />
 </widget>
