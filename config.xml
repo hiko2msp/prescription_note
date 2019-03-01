@@ -39,7 +39,6 @@
         </feature>
     </platform>
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
-    <plugin name="cordova-plugin-console" spec="1.1.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <engine name="ios" spec="^4.5.5" />
 </widget>

@@ -29,13 +29,7 @@ export class MainTabComponent {
 
     onPlusButtonClick(event: Event) {
 
-        function onDeviceReady() {
-          console.log("deviceready");
-          console.log((navigator as any).camera);
-        }
-
         document.addEventListener("deviceready",onDeviceReady,false);
-
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
