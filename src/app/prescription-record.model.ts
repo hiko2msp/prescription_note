@@ -16,6 +16,15 @@ export interface PrescriptionRecordViewModel {
 }
 
 export function prescriptionRecordToViewModel(record: PrescriptionRecord): PrescriptionRecordViewModel {
+    // recordがundefineでエラーが出るのを防ぐため仮に入れておく
+    if(!record){
+      return {
+        id: 4,
+        date: moment().toDate(),
+        image: '',
+        memo: '',
+      };
+    }
     return {
         id: record.id,
         date: moment(record.createdDate).toDate(),

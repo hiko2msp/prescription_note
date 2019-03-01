@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this._prescriptionRecordRepository.recordStateChanged().subscribe(() => {
                 this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
-                    this.items = records.map(prescriptionRecordToViewModel);
+                    this.items = records.filter(x => !!x).map(prescriptionRecordToViewModel);
                 });
             })
         );
