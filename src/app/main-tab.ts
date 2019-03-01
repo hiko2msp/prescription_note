@@ -29,7 +29,6 @@ export class MainTabComponent {
 
     onPlusButtonClick(event: Event) {
 
-        document.addEventListener("deviceready",onDeviceReady,false);
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
