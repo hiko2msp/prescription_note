@@ -40,5 +40,9 @@
     </platform>
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-add-swift-support" spec="^1.7.2" />
+    <plugin name="cordova-plugin-photo-library" spec="^2.2.1">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
+    </plugin>
     <engine name="ios" spec="^4.5.5" />
 </widget>
