@@ -12,7 +12,7 @@ import {PreviewComponent} from './home/preview';
 import {EditComponent} from './home/edit';
 
 declare let cordova: any;
-var pictureSource;   // 写真ソース
+var pictureSource;
 var destinationType; // 戻り値のフォーマット
 
 @Component({
@@ -33,10 +33,10 @@ export class MainTabComponent {
 
     // should be renamed to [dispPhotoLib]
     getPhoto(source) {
-      // 写真をファイル URI として取得する場合
       (navigator as any).camera.getPicture(
         function (imageURI) {
           console.log('image selected');
+          this.addPictureFile(imageURI);
         },
         function (err) {
           console.log('not selected');
@@ -51,13 +51,10 @@ export class MainTabComponent {
 
     getPhotoLibPermission(){
       cordova.plugins.photoLibrary.requestAuthorization(
-        function () {
-          // User gave us permission to his library, retry reading it!
+        () => {
           console.log('permission : success');
-          // 選択された画像をどう処理するか（多分URIを使うと思うが）
         },
-        function (err) {
-          // User denied the access
+        (err) => {
           console.log('permission : error');
         }, // if options not provided, defaults to {read: true}.
         {
@@ -67,23 +64,21 @@ export class MainTabComponent {
       );
     }
 
-    onPlusButtonClick(event: Event, no: number) {
+    onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
 
         document.addEventListener('deviceready',()=>{
-          if(no == 1) {
-            // とりあえずtrueにしているだけ
-            // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
-            if (true) {
+          if(selectedType == "Camera") {
+            if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
               document.addEventListener('deviceready',()=>{
                 console.log('camera in');
                 console.log((navigator as any).camera);
 
                 (navigator as any).camera.getPicture(
                     (imageURI) => {
-                        // this.addPictureFile(imageURI);
+                      this.addPictureFile(imageURI);
                     },
                     (message) => { console.log('error:', message); },
                     {
@@ -97,28 +92,29 @@ export class MainTabComponent {
                 this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
             }
           }
-          if(no == 2) {
+          if(selectedType == "PhotoLibrary") {
             pictureSource=(navigator as any).camera.PictureSourceType;
             destinationType=(navigator as any).camera.DestinationType;
             this.getPhotoLibPermission();
             this.getPhoto(pictureSource.SAVEDPHOTOALBUM);
           }
-          //this.photoGetLib();
         },{ once: true,});
     }
 
+    //成功したらユーザーに対して通知（Toastなど）を行いたい
     addPictureFile(imageURI) {
-        Promise.resolve()
-            .then(() =>
-                this._prescriptionRecordRepository.addRecord({
-                    id: null,
-                    createdDate: new Date().toISOString(),
-                    updatedDate: new Date().toISOString(),
-                    imagePath: imageURI,
-                    note: '',
-                }))
-            .then(result => this._prescriptionRecordRepository.getRecords())
-            .then(result => console.log('record', result))
-            .catch(error => console.log('error', error));
+      console.log('addPictureFile');
+    //   Promise.resolve()
+    //     .then(() =>
+    //         this._prescriptionRecordRepository.addRecord({
+    //             id: null,
+    //             createdDate: new Date().toISOString(),
+    //             updatedDate: new Date().toISOString(),
+    //             imagePath: imageURI,
+    //             note: '',
+    //         }))
+    //     .then(result => this._prescriptionRecordRepository.getRecords())
+    //     .then(result => console.log('record', result))
+    //     .catch(error => console.log('error', error));
     }
 }
