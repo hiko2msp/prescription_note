@@ -31,81 +31,30 @@ export class MainTabComponent {
         private _navigator: OnsNavigator,
     ) { }
 
-    // 写真の撮影に成功した場合 (URI  形式)
-    onPhotoURISuccess(imageURI) {
-    }
-
-    // ボタンがクリックされた場合の処理
+    // should be renamed to [dispPhotoLib]
     getPhoto(source) {
       // 写真をファイル URI として取得する場合
       (navigator as any).camera.getPicture(
         function (imageURI) {
-          alert('success');
+          console.log('image selected');
         },
         function (err) {
-          alert('error');
+          console.log('not selected');
         },
-        { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source
+        {
+          quality: 50,
+          destinationType: destinationType.FILE_URI,
+          sourceType: source
         }
       );
     }
 
-    photoGetLib() {
-      cordova.plugins.photoLibrary.getLibrary(
-        function ({library}) { },
-        function (err) {
-          if (err.startsWith('Permission')) {
-            // call requestAuthorization, and retry
-          }
-          // Handle error - it's not permission-related
-        }
-      );
-    }
-
-    photoLibGet() {
-      console.log("photoLibGet");
-      console.log(cordova);
-      cordova.plugins.photoLibrary.getLibrary(
-        function (result) {
-          var library = result.library;
-          // Here we have the library as array
-          library.forEach(function(libraryItem) {
-            console.log(libraryItem.id);          // ID of the photo
-            console.log(libraryItem.photoURL);    // Cross-platform access to photo
-            console.log(libraryItem.thumbnailURL);// Cross-platform access to thumbnail
-            console.log(libraryItem.fileName);
-            console.log(libraryItem.width);
-            console.log(libraryItem.height);
-            console.log(libraryItem.creationDate);
-            console.log(libraryItem.latitude);
-            console.log(libraryItem.longitude);
-            console.log(libraryItem.albumIds);    // array of ids of appropriate AlbumItem, only of includeAlbumsData was used
-          });
-        },
-        function (err) {
-          if (err.startsWith('Permission')) {
-            // call requestAuthorization, and retry
-              console.log('permission error');
-          }
-          console.log('Error occured');
-        },
-        { // optional options
-          thumbnailWidth: 512,
-          thumbnailHeight: 384,
-          quality: 0.8,
-          includeAlbumData: false // default
-        }
-      );
-    }
-
-    getPermission(){
-      console.log('getPermission');
+    getPhotoLibPermission(){
       cordova.plugins.photoLibrary.requestAuthorization(
         function () {
           // User gave us permission to his library, retry reading it!
-          console.log('permission : success?');
+          console.log('permission : success');
+          // 選択された画像をどう処理するか（多分URIを使うと思うが）
         },
         function (err) {
           // User denied the access
@@ -118,45 +67,44 @@ export class MainTabComponent {
       );
     }
 
-    onPlusButtonClick(event: Event) {
-
+    onPlusButtonClick(event: Event, no: number) {
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
 
         document.addEventListener('deviceready',()=>{
-          pictureSource=(navigator as any).camera.PictureSourceType;
-          destinationType=(navigator as any).camera.DestinationType;
-          this.getPermission();
-          // this.photoLibGet();
-          this.getPhoto(pictureSource.SAVEDPHOTOALBUM);
-          //this.photoGetLib();
-        },{once: true,});
+          if(no == 1) {
+            // とりあえずtrueにしているだけ
+            // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
+            if (true) {
+              document.addEventListener('deviceready',()=>{
+                console.log('camera in');
+                console.log((navigator as any).camera);
 
-        // とりあえずtrueにしているだけ
-        // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
-        // if (false) {
-        //   document.addEventListener('deviceready',()=>{
-        //     console.log('camera in');
-        //     console.log((navigator as any).camera);
-        //
-        //     (navigator as any).camera.getPicture(
-        //         (imageURI) => {
-        //             // this.addPictureFile(imageURI);
-        //         },
-        //         (message) => { console.log('error:', message); },
-        //         {
-        //             quality: 50,
-        //             destinationType: (navigator as any).camera.DestinationType.DATA_URL,
-        //         }
-        //     );
-        //   },{once: true,}); // for prevention of memory leak
-        // } else {
-        //     alert('test');
-        //     this.photoLibGet();
-        //     // const imageURI = 'click : ' + new Date();
-        //     // this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
-        // }
+                (navigator as any).camera.getPicture(
+                    (imageURI) => {
+                        // this.addPictureFile(imageURI);
+                    },
+                    (message) => { console.log('error:', message); },
+                    {
+                        quality: 50,
+                        destinationType: (navigator as any).camera.DestinationType.DATA_URL,
+                    }
+                );
+              },{once: true,}); // for prevention of memory leak
+            } else {
+                const imageURI = 'click : ' + new Date();
+                this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
+            }
+          }
+          if(no == 2) {
+            pictureSource=(navigator as any).camera.PictureSourceType;
+            destinationType=(navigator as any).camera.DestinationType;
+            this.getPhotoLibPermission();
+            this.getPhoto(pictureSource.SAVEDPHOTOALBUM);
+          }
+          //this.photoGetLib();
+        },{ once: true,});
     }
 
     addPictureFile(imageURI) {
