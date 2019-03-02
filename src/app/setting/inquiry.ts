@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { OnsNavigator } from 'ngx-onsenui';
 import * as ons from 'onsenui';
+import { DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
     selector: 'ons-page[inquiry]',
@@ -9,16 +10,22 @@ import * as ons from 'onsenui';
     <div class="left" (click)="onBackButtonClicked()"><ons-toolbar-button><ons-icon icon="fa-times"></ons-icon></ons-toolbar-button></div>
     <div class="center">問い合わせ</div>
     </ons-toolbar>
-    <ons-button style="width:80%; margin: 120% 10% 0 10%" modifier="large--cta" (click)="onMailButtonClicked()">
-      メールで問い合わせる
-    </ons-button>
+    <iframe [src]="safeSite" width="640" height="730" frameborder="0" marginheight="0" marginwidth="0">
+        読み込んでいます...
+    </iframe>
     `,
 })
 export class InquiryComponent {
+    safeSite: SafeResourceUrl;
+    formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeeU7LE1TN6o7pqNd9H8sxz5-NSQ1AcdQdd3tCGHjKo__WzQA/viewform?embedded=true';
 
     constructor(
         private _navigator: OnsNavigator,
-    ) {}
+        private _sanitizer: DomSanitizer,
+    ) {
+        this.safeSite = this._sanitizer.bypassSecurityTrustResourceUrl(this.formUrl);
+        window.open(this.formUrl, '_system', 'location=yes');
+    }
 
     onMailButtonClicked() {
         document.addEventListener('deviceready', function () {
