@@ -69,13 +69,9 @@ export class MainTabComponent {
         const ua = navigator.userAgent;
         console.log(ua);
 
-        document.addEventListener('deviceready',()=>{
-          if(selectedType == "Camera") {
+        if(selectedType === "Camera") {
             if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
               document.addEventListener('deviceready',()=>{
-                console.log('camera in');
-                console.log((navigator as any).camera);
-
                 (navigator as any).camera.getPicture(
                     (imageURI) => {
                       this.addPictureFile(imageURI);
@@ -91,14 +87,15 @@ export class MainTabComponent {
                 const imageURI = 'click : ' + new Date();
                 this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
             }
-          }
-          if(selectedType == "PhotoLibrary") {
-            pictureSource=(navigator as any).camera.PictureSourceType;
-            destinationType=(navigator as any).camera.DestinationType;
-            this.getPhotoLibPermission();
+        }
+        if(selectedType === "PhotoLibrary") {
+          pictureSource=(navigator as any).camera.PictureSourceType;
+          destinationType=(navigator as any).camera.DestinationType;
+          this.getPhotoLibPremission().then(() => {
             this.getPhoto(pictureSource.SAVEDPHOTOALBUM);
           }
-        },{ once: true,});
+        }
+      },{ once: true,});
     }
 
     //成功したらユーザーに対して通知（Toastなど）を行いたい
