@@ -43,25 +43,27 @@ export class MainTabComponent {
         },
         {
           quality: 50,
-          destinationType: destinationType.FILE_URI,
+          destinationType: (navigator as any).camera.DestinationType.DATA_URI,
           sourceType: source
         }
       );
     }
 
     getPhotoLibPermission(){
-      cordova.plugins.photoLibrary.requestAuthorization(
-        () => {
-          console.log('permission : success');
-        },
-        (err) => {
-          console.log('permission : error');
-        }, // if options not provided, defaults to {read: true}.
-        {
-          read: true,
-          write: true
-        }
-      );
+      return new Promise((resolve,reject) => {
+        cordova.plugins.photoLibrary.requestAuthorization(
+          () => {
+            resolve();
+          },
+          (err) => {
+            reject();
+          }, // if options not provided, defaults to {read: true}.
+          {
+            read: true,
+            write: true
+          }
+        );
+      });
     }
 
     onPlusButtonClick(event: Event, selectedType: string) {
@@ -91,12 +93,11 @@ export class MainTabComponent {
         if(selectedType === "PhotoLibrary") {
           pictureSource=(navigator as any).camera.PictureSourceType;
           destinationType=(navigator as any).camera.DestinationType;
-          this.getPhotoLibPremission().then(() => {
+          this.getPhotoLibPermission().then(() => {
             this.getPhoto(pictureSource.SAVEDPHOTOALBUM);
-          }
+          });
         }
-      },{ once: true,});
-    }
+      }
 
     //成功したらユーザーに対して通知（Toastなど）を行いたい
     addPictureFile(imageURI) {
