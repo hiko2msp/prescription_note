@@ -15,6 +15,9 @@
     },
     "cordova-sqlite-storage": {
       "PACKAGE_NAME": "com.gmail.hiko2msp.apple"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.gmail.hiko2msp.apple"
     }
   },
   "dependent_plugins": {}

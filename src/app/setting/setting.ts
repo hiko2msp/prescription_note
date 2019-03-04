@@ -3,6 +3,7 @@ import {OnsNavigator} from 'ngx-onsenui';
 import {AboutComponent} from './about';
 import {AccountComponent} from './account';
 import {RegulationComponent} from './regulation/regulation.component';
+import * as ons from 'onsenui';
 
 @Component({
     selector: 'ons-page[setting]',
@@ -29,7 +30,17 @@ export class SettingComponent {
     }
 
     onInquiryClicked() {
-        window.open(this.formUrl, '_system', 'location=yes');
+        ons.notification.confirm({
+            title: null,
+            buttonLabels: ['いいえ', 'はい'],
+            message: 'ブラウザで<br>問い合わせフォームを開きます',
+            cancelable: true,
+            callback: answerIndex => {
+                if (answerIndex === 1) {
+                    window.open(this.formUrl, '_system', 'location=yes');
+                }
+            }
+          });
     }
 
     onRegulationClicked() {

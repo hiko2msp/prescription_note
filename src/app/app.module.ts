@@ -11,7 +11,6 @@ import { PreviewComponent } from './home/preview';
 import { HomeMainComponent } from './home/home-main';
 import { AboutComponent } from './setting/about';
 import { AccountComponent } from './setting/account';
-import { InquiryComponent } from './setting/inquiry';
 import { SettingComponent } from './setting/setting';
 import { SettingMainComponent } from './setting/setting-main';
 import { RegulationComponent } from './setting/regulation/regulation.component';
@@ -29,7 +28,6 @@ const components = [
     HomeMainComponent,
     AboutComponent,
     AccountComponent,
-    InquiryComponent,
     SettingComponent,
     SettingMainComponent,
     RegulationComponent,
