@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "iOS": "cordova run ios --buildFlag='-UseModernBuildSystem=0'"
+    "preios": "ng build",
+    "ios": "cordova run ios --buildFlag='-UseModernBuildSystem=0'"
   },
   "private": true,
   "dependencies": {
