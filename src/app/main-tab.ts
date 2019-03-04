@@ -7,7 +7,7 @@ import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
 import {prescriptionRecordToViewModel} from './prescription-record.model';
 import {BrowserCameraComponent} from './browser-camera.component';
-import { PrescriptionRecord } from './prescription-record.model';
+import {PrescriptionRecord} from './prescription-record.model';
 import {PreviewComponent} from './home/preview';
 import {EditComponent} from './home/edit';
 
@@ -28,11 +28,18 @@ export class MainTabComponent {
     ) { }
 
     onPlusButtonClick(event: Event) {
+
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
 
-        if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
+        // とりあえずtrueにしているだけ
+        // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
+        if (true) {
+          document.addEventListener('deviceready',()=>{
+            console.log('camera in');
+            console.log((navigator as any).camera);
+
             (navigator as any).camera.getPicture(
                 (imageURI) => {
                     // this.addPictureFile(imageURI);
@@ -43,6 +50,7 @@ export class MainTabComponent {
                     destinationType: (navigator as any).camera.DestinationType.DATA_URL,
                 }
             );
+          },{once: true,}); // for prevention of memory leak
         } else {
             const imageURI = 'click : ' + new Date();
             this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
