@@ -15,27 +15,34 @@ export class PrescriptionRecordRepository {
 
     private _database = null;
     constructor() {
-        this._database = (window as any).openDatabase(DATABASE_NAME, 1.0, 'お薬手帳レコード', 1000000);
-        this._database.transaction(
-            (tx) => {
-                tx.executeSql(`DROP TABLE IF EXISTS ${DATABASE_NAME}`, [], () => {}, () => {});
-                const sql = `
-                create table if not exists ${DATABASE_NAME} (
-                    id integer not null primary key autoincrement,
-                    createdDate text not null,
-                    updatedDate text not null,
-                    imagePath text,
-                    note text
-                )
-                `;
-                tx.executeSql(
-                    sql,
-                    [],
-                    (_, record) => {console.log('record1', record); },
-                    (_, error) => {console.log('test1', error); }
-                );
-            }
-        );
+        document.addEventListener('deviceready', () => {
+            this._database = (window as any).sqlitePlugin.openDatabase({
+                name: DATABASE_NAME,
+                location: 'default',
+                androidDatabaseProvider: 'system'
+            });
+            this._database.transaction(
+                (tx) => {
+                    // データベースをリセットしたいときはこのコメントアウトを外す
+                    // tx.executeSql(`DROP TABLE IF EXISTS ${DATABASE_NAME}`, [], () => { }, () => { });
+                    const sql = `
+                    create table if not exists ${DATABASE_NAME} (
+                        id integer not null primary key autoincrement,
+                        createdDate text not null,
+                        updatedDate text not null,
+                        imagePath text,
+                        note text
+                    )
+                    `;
+                    tx.executeSql(
+                        sql,
+                        [],
+                        (_, record) => { console.log('record1', record); },
+                        (_, error) => { console.log('test1', error); }
+                    );
+                }
+            );
+        }, {once: true});
     }
 
     addRecord(record: PrescriptionRecord): Promise<boolean> {
@@ -128,7 +135,10 @@ export class PrescriptionRecordRepository {
             this._database.transaction(
                 (tx) => {
                     tx.executeSql(`select * from ${DATABASE_NAME}`, [],
-                        (_, result) => { resolve(Array.from(result.rows)); },
+                        (_, result) => {
+                            const items = Array.from(result.rows).map((v, k) => result.rows.item(k));
+                            resolve(items);
+                        },
                         (_, error: Error) => { reject(error); }
                     );
                 }
@@ -145,7 +155,7 @@ export class PrescriptionRecordRepository {
                 this._database.transaction(
                     (tx) => {
                         tx.executeSql(`select * from ${DATABASE_NAME} where id = ? limit 1;`, [recordId],
-                            (_, result) => { resolve(Array.from(result.rows)[0] as PrescriptionRecord); },
+                            (_, result) => { resolve(result.rows.item(0) as PrescriptionRecord); },
                             (_, error: Error) => { reject(error); }
                         );
                     }
@@ -162,7 +172,7 @@ export class PrescriptionRecordRepository {
             this._database.transaction(
                 (tx) => {
                     tx.executeSql(`select * from ${DATABASE_NAME} where id = ? limit 1`, [recordId],
-                        (_, result) => { resolve(Array.from(result.rows)[0] as PrescriptionRecord); },
+                        (_, result) => { resolve(result.rows.item(0) as PrescriptionRecord); },
                         (_, error: Error) => { reject(error); }
                     );
                 }
@@ -178,7 +188,7 @@ export class PrescriptionRecordRepository {
             this._database.transaction(
                 (tx) => {
                     tx.executeSql(`select * from ${DATABASE_NAME} order by id desc limit 1`, [],
-                        (_, result) => { resolve(Array.from(result.rows)[0] as PrescriptionRecord); },
+                        (_, result) => { resolve(result.rows.item(0) as PrescriptionRecord); },
                         (_, error: Error) => { reject(error); }
                     );
                 }

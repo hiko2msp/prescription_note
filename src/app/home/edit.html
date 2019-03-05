@@ -24,8 +24,8 @@
   </p>
 
   <div class="imgPreview">
-    <img class="imgPreview__img" src="{{item.image}}" (click)="onImgChange()">
-     <i class="imgPreview__edit-icon far fa-edit" (click)="onImgChange()"></i>
+    <img class="imgPreview__img" src="{{item.image}}" (click)="actionSheet.show()">
+     <i class="imgPreview__edit-icon far fa-edit" (click)="actionSheet.show()"></i>
   </div>
 
   <p class="updateButton" (click)="onEditEndClicked()">
@@ -34,3 +34,12 @@
     </ons-button>
   </p>
 </div>
+
+<ons-action-sheet #actionSheet cancelable [attr.animation]="animation">
+   <div class="action-sheet-mask"></div>
+   <div class="action-sheet">
+     <ons-action-sheet-button icon="md-square-o" (click)="onPlusButtonClick($event,'Camera');actionSheet.hide()">カメラ</ons-action-sheet-button>
+     <ons-action-sheet-button icon="md-square-o" (click)="onPlusButtonClick($event,'PhotoLibrary');actionSheet.hide()">アルバム</ons-action-sheet-button>
+     <ons-action-sheet-button icon="md-square-o" (click)="actionSheet.hide()" modifier="destructive">キャンセル</ons-action-sheet-button>
+   </div>
+</ons-action-sheet>

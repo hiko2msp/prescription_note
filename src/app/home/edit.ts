@@ -4,6 +4,7 @@ import { PrescriptionRecordViewModel } from '../prescription-record.model';
 import {PrescriptionRecordRepository} from '../../service/prescription-record.repository';
 import {BrowserCameraComponent} from '../browser-camera.component';
 import * as ons from 'onsenui';
+import { CameraService } from 'src/service/camera.service';
 
 const TOAST_TIMEOUT = 2000; // 2000msec
 
@@ -22,6 +23,7 @@ export class EditComponent implements OnInit {
         private _navigator: OnsNavigator,
         private params: Params,
         private _prescriptionRecordRepository: PrescriptionRecordRepository,
+        private _cameraService: CameraService,
     ) {}
 
     ngOnInit() {
@@ -33,20 +35,26 @@ export class EditComponent implements OnInit {
         this._navigator.element.popPage();
     }
 
-    // 画像をタッチした時に呼び出される
-    onImgChange() {
-        // 写真撮影かアルバムからか選択する画面を出す
-        const isImgChange = this.shootOrAlbum();
-        if (isImgChange) {
-            Promise.resolve()
-                .then(() => this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: this.item.id}));
-        } else {
-            console.log('image not changed (=canceled)');
-        }
-    }
+    onPlusButtonClick(event: Event, selectedType: string) {
+        event.stopPropagation();
 
-    shootOrAlbum(): boolean {
-        return true;
+        if ( selectedType === 'Camera' ) {
+            this._cameraService.getPictureFromCamera()
+                .then(imagePath => {
+                    this.item.image = imagePath;
+                }).catch(error => {
+                    console.log(error);
+                });
+        } else if ( selectedType === 'PhotoLibrary') {
+            this._cameraService.getPictureFromAlbum()
+                .then(imagePath => {
+                    this.item.image = imagePath;
+                }).catch(error => {
+                    console.log(error);
+                });
+        } else {
+            ons.notification.alert('カメラは使えません');
+        }
     }
 
     // 登録完了ボタンタッチで呼び出される

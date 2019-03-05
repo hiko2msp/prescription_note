@@ -22,29 +22,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     items: PrescriptionRecordViewModel[] = [];
 
-    user_image = 'assets/img/test.jpeg';
-    big_image = 'assets/img/test.jpeg';
-    title = 'No.1 Date: 2018/12/13';
-    memo = '桜病院での処方';
-
     constructor(
         private _navigator: OnsNavigator,
         private _prescriptionRecordRepository: PrescriptionRecordRepository,
     ) {}
 
     ngOnInit() {
-        this._prescriptionRecordRepository
-            .addRecord({
-                id: null,
-                createdDate: new Date(2017, 12, 12).toISOString(),
-                updatedDate: new Date(2017, 12, 13).toISOString(),
-                imagePath: 'assets/img/test.jpeg',
-                note: 'test note',
-            })
-            .then(() => {
-                this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
-                    this.items = records.map(prescriptionRecordToViewModel);
-                });
+        this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
+                this.items = records.map(prescriptionRecordToViewModel);
             })
             .catch(error => console.log('error', error));
         this.subscriptions.push(
