@@ -51,12 +51,19 @@ export class EditComponent implements OnInit {
 
     // 登録完了ボタンタッチで呼び出される
     onEditEndClicked() {
+        // 入力された時刻を取得してtoISOStringの形式にする
+        let addDate = document.getElementById("addDate") as HTMLTextAreaElement;
+        console.log("addDate -> "+ addDate.value);
+
+        // memoの部分を取得する
+        let memoText = document.getElementById("memo") as HTMLTextAreaElement;
+
         this._prescriptionRecordRepository.updateRecord({
             id: this.item.id,
-            createdDate: this.item.date.toISOString(),
+            createdDate: new Date(addDate.value).toISOString(),
             updatedDate: new Date().toISOString(),
             imagePath: this.item.image,
-            note: '',
+            note: String(memoText.value),
         })
         .then(() => {
             ons.notification.toast('Registration Success !!', { timeout: TOAST_TIMEOUT });

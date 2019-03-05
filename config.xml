@@ -37,8 +37,19 @@
         <feature name="Camera">
             <param name="ios-package" value="CDVCamera" />
         </feature>
+        <config-file parent="CFBundleDevelopmentRegion" target="*-Info.plist">
+            <array>
+                <string>ja</string>
+            </array>
+        </config-file>
+        <config-file parent="CFBundleLocalizations" target="*-Info.plist">
+            <array>
+                <string>ja</string>
+            </array>
+        </config-file>
     </platform>
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.2" />
     <plugin name="cordova-plugin-photo-library" spec="^2.2.1">
