@@ -7,7 +7,9 @@
     "build": "ng build; cordova build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "preios": "ng build",
+    "ios": "cordova run ios --buildFlag='-UseModernBuildSystem=0'"
   },
   "private": true,
   "dependencies": {

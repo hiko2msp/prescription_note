@@ -16,47 +16,76 @@ import {EditComponent} from './home/edit';
     templateUrl: './main-tab.html',
 })
 export class MainTabComponent {
+
+    cordova: any;
+    pictureSource;
+
     home = HomeComponent;
     setting = SettingComponent;
 
-    animation = ons.platform.isAndroid() ? 'slide' : 'none';
+    animation = ons.platform.isAndroid() ? 'slide' : 'default';
     modifier = ons.platform.isAndroid() ? 'material noshadow' : '';
 
     constructor(
         private _prescriptionRecordRepository: PrescriptionRecordRepository,
         private _navigator: OnsNavigator,
-    ) { }
+    ) {
+        document.addEventListener('deviceready', () => {
+            this.pictureSource = (navigator as any).camera.PictureSourceType;
+            },
+            {
+                once: true,
+            }
+        );
+    }
 
-    onPlusButtonClick(event: Event) {
+    // should be renamed to [dispPhotoLib]
+    dispPhotoLib(source) {
+        (navigator as any).camera.getPicture(
+            (imageURI) => { this.addPictureFile(imageURI); },
+            (message) => { console.log('error:', message); },
+            {
+                quality: 50,
+                destinationType: (navigator as any).camera.DestinationType.DATA_URI,
+                sourceType: source
+            }
+        );
+    }
 
+    getPhotoLibPermission(){
+        return new Promise((resolve,reject) => {
+            this.cordova.plugins.photoLibrary.requestAuthorization(
+                () => { resolve(); },
+                (err) => { reject(); },
+                 // if options not provided, defaults to {read: true}.
+                {
+                    read: true,
+                    write: true
+                }
+            );
+        });
+    }
+
+    onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
         const ua = navigator.userAgent;
         console.log(ua);
 
-        // とりあえずtrueにしているだけ
-        // if (/iPad|iPhone|Android/i.test(ua) && !/Mozilla/.test(ua)) {
-        if (true) {
-          document.addEventListener('deviceready',()=>{
-            console.log('camera in');
-            console.log((navigator as any).camera);
-
-            (navigator as any).camera.getPicture(
-                (imageURI) => {
-                    // this.addPictureFile(imageURI);
+        if ( selectedType === "Camera" ) {
+            document.addEventListener('deviceready', () => {
+                this.dispPhotoLib(this.pictureSource.CAMERA);
                 },
-                (message) => { console.log('error:', message); },
-                {
-                    quality: 50,
-                    destinationType: (navigator as any).camera.DestinationType.DATA_URL,
-                }
+                { once: true, }  // for prevention of memory leak
             );
-          },{once: true,}); // for prevention of memory leak
-        } else {
-            const imageURI = 'click : ' + new Date();
-            this._navigator.element.pushPage(BrowserCameraComponent, { animation: 'lift', data: 'no data'});
+        } else if ( selectedType === "PhotoLibrary" ) {
+            // destinationType=(navigator as any).camera.DestinationType;
+            this.getPhotoLibPermission().then(() => {
+                this.dispPhotoLib(this.pictureSource.SAVEDPHOTOALBUM);
+            });
         }
     }
 
+    //成功したらユーザーに対して通知（Toastなど）を行いたい
     addPictureFile(imageURI) {
         Promise.resolve()
             .then(() =>
@@ -71,4 +100,5 @@ export class MainTabComponent {
             .then(result => console.log('record', result))
             .catch(error => console.log('error', error));
     }
+
 }

@@ -4,7 +4,18 @@
     <div class="tabbar">
       <ons-tab icon="fa-wrench" label="設定" [page]="setting"></ons-tab>
       <ons-tab icon="fa-home" label="ホーム" [page]="home" active></ons-tab>
-      <ons-tab icon="fa-camera" label="追加" (click)="onPlusButtonClick($event)"></ons-tab>
+      <ons-tab icon="fa-camera" label="追加" (click)="actionSheet.show()"></ons-tab>
     </div>
   </ons-tabbar>
 </div>
+
+<ons-action-sheet #actionSheet cancelable [attr.animation]="animation">
+   <div class="action-sheet-mask"></div>
+   <div class="action-sheet">
+     <div class="action-sheet-title">Static action sheet</div>
+     <ons-action-sheet-button icon="md-square-o" (click)="onPlusButtonClick($event,'Camera');actionSheet.hide()">Camera</ons-action-sheet-button>
+     <ons-action-sheet-button icon="md-square-o" (click)="onPlusButtonClick($event,'PhotoLibrary');actionSheet.hide()">Photo Library</ons-action-sheet-button>
+     <ons-action-sheet-button icon="md-square-o" (click)="actionSheet.hide()" modifier="destructive">Cancel</ons-action-sheet-button>
+     <!-- <ons-action-sheet-button icon="md-close" (click)="actionSheet.hide()">Cancel</ons-action-sheet-button> -->
+   </div>
+</ons-action-sheet>
