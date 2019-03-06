@@ -6,7 +6,7 @@ import {AboutComponent} from './about';
   selector: 'ons-page[account]',
   template: `
   <ons-toolbar [attr.modifier]="modifier">
-    <div class="left" (click)="onCloseClicked()"><ons-toolbar-button><ons-icon icon="fa-times"></ons-icon></ons-toolbar-button></div>
+    <div class="left" (click)="onCloseClicked()"><ons-toolbar-button><ons-icon icon="fa-backward"></ons-icon></ons-toolbar-button></div>
     <div class="center">個人情報設定</div>
   </ons-toolbar>
   個人情報設定は追加予定です
@@ -18,6 +18,9 @@ export class AccountComponent {
   ) {}
 
   onCloseClicked() {
-    this._navigator.element.popPage();
+    this._navigator.element.popPage({
+      animation: 'simpleslide',
+    });
   }
+
 }
