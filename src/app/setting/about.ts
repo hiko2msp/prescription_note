@@ -12,6 +12,9 @@ export class AboutComponent {
   ) {}
 
   onCloseClicked() {
-    this._navigator.element.popPage();
+    this._navigator.element.popPage({
+      animation: 'simpleslide',
+    });
   }
+
 }

@@ -117,4 +117,3 @@ export class BrowserCameraComponent implements OnInit {
         }
     }
 }
-
