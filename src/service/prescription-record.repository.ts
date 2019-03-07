@@ -15,12 +15,7 @@ export class PrescriptionRecordRepository {
 
     private _database = null;
     constructor() {
-        document.addEventListener('deviceready', () => {
-            this._database = (window as any).sqlitePlugin.openDatabase({
-                name: DATABASE_NAME,
-                location: 'default',
-                androidDatabaseProvider: 'system'
-            });
+        this.createDatabase().then(() => {
             this._database.transaction(
                 (tx) => {
                     // データベースをリセットしたいときはこのコメントアウトを外す
@@ -37,12 +32,33 @@ export class PrescriptionRecordRepository {
                     tx.executeSql(
                         sql,
                         [],
-                        (_, record) => { console.log('record1', record); },
+                        (_, record) => {
+                            this.recordChangeStream.next('initial');
+                        },
                         (_, error) => { console.log('test1', error); }
                     );
                 }
             );
-        }, {once: true});
+        });
+    }
+
+    createDatabase(): Promise<void> {
+        if (/iPhone/.test(navigator.userAgent)) {
+            return new Promise((resolve, reject) => {
+                document.addEventListener('deviceready', () => {
+                    this._database = (window as any).sqlitePlugin.openDatabase({
+                        name: DATABASE_NAME,
+                        location: 'default',
+                        androidDatabaseProvider: 'system'
+                    });
+                    resolve();
+                }, {once: true});
+            });
+        } else {
+            // ブラウザでの動作確認用
+            this._database = (window as any).openDatabase(DATABASE_NAME, 1.0, 'お薬手帳レコード', 1000000);
+            return Promise.resolve();
+        }
     }
 
     addRecord(record: PrescriptionRecord): Promise<boolean> {
