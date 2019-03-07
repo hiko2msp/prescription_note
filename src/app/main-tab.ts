@@ -5,21 +5,13 @@ import {OnsNavigator} from 'ngx-onsenui';
 import {HomeComponent} from './home/home';
 import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
-import {prescriptionRecordToViewModel} from './prescription-record.model';
-import {BrowserCameraComponent} from './browser-camera.component';
-import {PrescriptionRecord} from './prescription-record.model';
-import {PreviewComponent} from './home/preview';
-import {EditComponent} from './home/edit';
+import {CameraService} from 'src/service/camera.service';
 
 @Component({
     selector: 'ons-page[main-tab]',
     templateUrl: './main-tab.html',
 })
 export class MainTabComponent {
-
-    cordova: any;
-    pictureSource;
-
     home = HomeComponent;
     setting = SettingComponent;
 
@@ -29,63 +21,31 @@ export class MainTabComponent {
     constructor(
         private _prescriptionRecordRepository: PrescriptionRecordRepository,
         private _navigator: OnsNavigator,
-    ) {
-        document.addEventListener('deviceready', () => {
-            this.pictureSource = (navigator as any).camera.PictureSourceType;
-            },
-            {
-                once: true,
-            }
-        );
-    }
-
-    // should be renamed to [dispPhotoLib]
-    dispPhotoLib(source) {
-        (navigator as any).camera.getPicture(
-            (imageURI) => { this.addPictureFile(imageURI); },
-            (message) => { console.log('error:', message); },
-            {
-                quality: 50,
-                destinationType: (navigator as any).camera.DestinationType.DATA_URI,
-                sourceType: source
-            }
-        );
-    }
-
-    getPhotoLibPermission(){
-        return new Promise((resolve,reject) => {
-            this.cordova.plugins.photoLibrary.requestAuthorization(
-                () => { resolve(); },
-                (err) => { reject(); },
-                 // if options not provided, defaults to {read: true}.
-                {
-                    read: true,
-                    write: true
-                }
-            );
-        });
-    }
+        private _cameraService: CameraService,
+    ) {}
 
     onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
-        const ua = navigator.userAgent;
-        console.log(ua);
 
-        if ( selectedType === "Camera" ) {
-            document.addEventListener('deviceready', () => {
-                this.dispPhotoLib(this.pictureSource.CAMERA);
-                },
-                { once: true, }  // for prevention of memory leak
-            );
-        } else if ( selectedType === "PhotoLibrary" ) {
-            // destinationType=(navigator as any).camera.DestinationType;
-            this.getPhotoLibPermission().then(() => {
-                this.dispPhotoLib(this.pictureSource.SAVEDPHOTOALBUM);
-            });
+        if ( selectedType === 'Camera' ) {
+            this._cameraService.getPictureFromCamera()
+                .then(imagePath => {
+                    this.addPictureFile(imagePath);
+                }).catch(error => {
+                    console.log(error);
+                });
+        } else if ( selectedType === 'PhotoLibrary') {
+            this._cameraService.getPictureFromAlbum()
+                .then(imagePath => {
+                    this.addPictureFile(imagePath);
+                }).catch(error => {
+                    console.log(error);
+                });
+        } else {
+            ons.notification.alert('カメラは使えません');
         }
     }
 
-    //成功したらユーザーに対して通知（Toastなど）を行いたい
     addPictureFile(imageURI) {
         Promise.resolve()
             .then(() =>
@@ -97,8 +57,9 @@ export class MainTabComponent {
                     note: '',
                 }))
             .then(result => this._prescriptionRecordRepository.getRecords())
-            .then(result => console.log('record', result))
+            .then(result => {
+                console.log('record', result);
+            })
             .catch(error => console.log('error', error));
     }
-
 }
