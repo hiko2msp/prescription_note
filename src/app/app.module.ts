@@ -18,6 +18,7 @@ import { PrescriptionRecordRepository } from '../service/prescription-record.rep
 import { CameraService } from '../service/camera.service';
 import { OnsenModule } from 'ngx-onsenui';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { OrderByPipe } from './descending_order';
 
 const components = [
     AppComponent,
@@ -36,7 +37,10 @@ const components = [
 
 @NgModule({
     entryComponents: components,
-    declarations: components,
+    declarations: [
+        components,
+        OrderByPipe,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,

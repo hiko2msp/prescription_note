@@ -2,7 +2,7 @@
   <div class="center">お薬手帳</div>
 </ons-toolbar>
 
-<ons-list-item expandable *ngFor="let item of items" class="list-item">
+<ons-list-item expandable *ngFor="let item of items | orderBy: 'id'" class="list-item">
   <div class="heading center">
     <div class="heading-container">
       <div class="heading-container__num">No. {{item.id}}</div>
