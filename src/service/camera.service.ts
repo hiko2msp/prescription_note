@@ -56,10 +56,16 @@ export class CameraService {
     }
 
     getPictureFromCamera(): Promise<string> {
+        if (!/iPhone/.test(navigator.userAgent)) {
+            return Promise.resolve('assets/img/test.jpeg');
+        }
         return this.getPictureFrom(this.camera.PictureSourceType.CAMERA);
     }
 
     getPictureFromAlbum(): Promise<string> {
+        if (!/iPhone/.test(navigator.userAgent)) {
+            return Promise.resolve('assets/img/test.jpeg');
+        }
         return this.getPictureFrom(this.camera.PictureSourceType.SAVEDPHOTOALBUM);
     }
 }
