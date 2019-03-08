@@ -15,7 +15,7 @@ export class MainTabComponent {
     home = HomeComponent;
     setting = SettingComponent;
 
-    animation = ons.platform.isAndroid() ? 'slide' : 'default';
+    animation = 'default';
     modifier = ons.platform.isAndroid() ? 'material noshadow' : '';
 
     constructor(

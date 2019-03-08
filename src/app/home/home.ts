@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {
     PrescriptionRecord,
     PrescriptionRecordViewModel,
@@ -20,11 +20,12 @@ import {Subscription} from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
-    items: PrescriptionRecordViewModel[] = [];
+    items: PrescriptionRecordViewModel[];
 
     constructor(
         private _navigator: OnsNavigator,
         private _prescriptionRecordRepository: PrescriptionRecordRepository,
+        private _changeDetectorRef: ChangeDetectorRef,
     ) {}
 
     ngOnInit() {
@@ -33,10 +34,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             })
             .catch(error => console.log('error', error));
         this.subscriptions.push(
-            this._prescriptionRecordRepository.recordStateChanged().subscribe(() => {
+            this._prescriptionRecordRepository.recordStateChanged().subscribe((flag) => {
                 this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
                     this.items = records.filter(x => !!x).map(prescriptionRecordToViewModel);
-                });
+                    this._changeDetectorRef.detectChanges();
+                })
+                .catch(error => console.log('error', error));
             })
         );
     }
@@ -46,7 +49,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     onItemClicked(item: PrescriptionRecordViewModel) {
-        console.log(`No.${item.id} item Clicked`);
         this._navigator.element.pushPage(PreviewComponent, { animation: 'simpleslide', data: item.id, });
     }
 
