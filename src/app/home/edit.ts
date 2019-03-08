@@ -6,6 +6,7 @@ import {BrowserCameraComponent} from '../browser-camera.component';
 import * as ons from 'onsenui';
 import { CameraService } from 'src/service/camera.service';
 
+// preview.tsとedit.ts共通なのでまとめたい
 const TOAST_TIMEOUT = 2000; // 2000msec
 
 @Component({
@@ -74,7 +75,7 @@ export class EditComponent implements OnInit {
             note: String(memoText.value),
         })
         .then(() => {
-            ons.notification.toast('Registration Success !!', { timeout: TOAST_TIMEOUT });
+            ons.notification.toast('登録に成功しました', { timeout: TOAST_TIMEOUT });
             this._navigator.element.popPage();
         })
         .catch(error => console.log('error', error));

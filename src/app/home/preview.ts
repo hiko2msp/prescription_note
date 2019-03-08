@@ -5,6 +5,10 @@ import { PrescriptionRecordViewModel, prescriptionRecordToViewModel } from '../p
 import {PrescriptionRecordRepository} from '../../service/prescription-record.repository';
 import {Subject, Observable, of} from 'rxjs';
 import * as op from 'rxjs/operators';
+import * as ons from 'onsenui';
+
+// preview.tsとedit.ts共通なのでまとめたい
+const TOAST_TIMEOUT = 2000; // 2000msec
 
 @Component({
     selector: 'ons-page[preview]',
@@ -53,5 +57,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
         Promise.resolve()
             .then(() => this._navigator.element.popPage())
             .then(() => this._prescriptionRecordRepository.deleteById(this.itemId));
+            .then(() => ons.notification.toast('削除しました', { timeout: TOAST_TIMEOUT }))
     }
 }
