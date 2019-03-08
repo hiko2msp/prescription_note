@@ -47,6 +47,7 @@
                 <string>ja</string>
             </array>
         </config-file>
+        <preference name="orientation" value="portrait" />
     </platform>
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
