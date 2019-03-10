@@ -56,7 +56,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     onDeleteClicked() {
         Promise.resolve()
             .then(() => this._navigator.element.popPage())
-            .then(() => this._prescriptionRecordRepository.deleteById(this.itemId));
-            .then(() => ons.notification.toast('削除しました', { timeout: TOAST_TIMEOUT }))
+            .then(() => this._prescriptionRecordRepository.deleteById(this.itemId))
+            .then(() => ons.notification.toast('削除しました', { timeout: TOAST_TIMEOUT }));
     }
 }
