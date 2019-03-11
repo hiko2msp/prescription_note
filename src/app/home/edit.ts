@@ -64,21 +64,26 @@ export class EditComponent implements OnInit {
         let addDate = document.getElementById("addDate") as HTMLTextAreaElement;
         console.log("addDate -> "+ addDate.value);
 
-        // memoの部分を取得する
-        let memoText = document.getElementById("memo") as HTMLTextAreaElement;
+        if(!addDate.value) {
+            ons.notification.toast('日時を入力してください', { timeout: TOAST_TIMEOUT });
+        }else {
+            // memoの部分を取得する
+            let memoText = document.getElementById("memo") as HTMLTextAreaElement;
 
-        this._prescriptionRecordRepository.updateRecord({
-            id: this.item.id,
-            createdDate: new Date(addDate.value).toISOString(),
-            updatedDate: new Date().toISOString(),
-            imagePath: this.item.image,
-            note: String(memoText.value),
-        })
-        .then(() => {
-            ons.notification.toast('登録に成功しました', { timeout: TOAST_TIMEOUT });
-            this._navigator.element.popPage();
-        })
-        .catch(error => console.log('error', error));
+            this._prescriptionRecordRepository.updateRecord({
+                id: this.item.id,
+                createdDate: new Date(addDate.value).toISOString(),
+                updatedDate: new Date().toISOString(),
+                imagePath: this.item.image,
+                note: String(memoText.value),
+            })
+            .then(() => {
+                ons.notification.toast('登録に成功しました', { timeout: TOAST_TIMEOUT });
+                this._navigator.element.popPage();
+            })
+            .catch(error => console.log('error', error));
+
+        }
     }
 
 }
