@@ -17,6 +17,7 @@ import { RegulationComponent } from './setting/regulation/regulation.component';
 import { PrescriptionRecordRepository } from '../service/prescription-record.repository';
 import { CameraService } from '../service/camera.service';
 import { OnsenModule } from 'ngx-onsenui';
+import { CDVPhotoLibraryPipe } from '../pipe/cdvphotolibrary.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OrderByPipe } from './descending_order';
 
@@ -38,8 +39,9 @@ const components = [
 @NgModule({
     entryComponents: components,
     declarations: [
-        components,
+        ...components,
         OrderByPipe,
+        CDVPhotoLibraryPipe,
     ],
     imports: [
         BrowserModule,

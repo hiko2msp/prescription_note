@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+export const ALBUM_NAME = 'お薬手帳アプリ';
 
 @Injectable({
     providedIn: 'root'
@@ -7,11 +8,14 @@ import { Injectable } from '@angular/core';
 export class CameraService {
     cordova: any;
     camera: any;
+    library: any;
 
     constructor() {
         document.addEventListener('deviceready',
             () => {
+                this.cordova = (window as any).cordova;
                 this.camera = (navigator as any).camera;
+                this.library = this.cordova.plugins.photoLibrary;
             },
             {once: true}
         );
@@ -19,7 +23,6 @@ export class CameraService {
 
     getPhotoLibPermission() {
         return new Promise((resolve, reject) => {
-            console.log(this.cordova);
             if (!this.cordova) {
                 reject();
             }
@@ -38,6 +41,60 @@ export class CameraService {
         });
     }
 
+    getLibrary() {
+        if (!this.library) {
+            console.log('library not found');
+            return;
+        }
+        this.library.getLibrary(
+            (chunk: any) => {
+                console.log('chunk', chunk);
+            },
+            (err: any) => {
+                this.library.requestAuthorization(
+                    () => {},
+                    (err2: any) => {console.log(err2); },
+                    {read: true, write: true}
+                );
+            },
+            {
+                chunkTimeSec: 0.3
+            }
+        );
+    }
+
+    savePhoto(imageURI: string): Promise<any> {
+        if (!this.library) {
+            return Promise.reject();
+        }
+
+        return new Promise((resolve, reject) => {
+            this.library.saveImage(
+                imageURI,
+                ALBUM_NAME,
+                (libraryItem: any) => {
+                    resolve(libraryItem);
+                },
+                (err: Error) => {
+                    reject(err);
+                });
+        });
+    }
+
+    getPhotoURL(libraryItem: any): Promise<string> {
+        if (!this.library) {
+            return Promise.reject();
+        }
+
+        return new Promise((resolve, reject) => {
+            this.library.getPhotoURL(
+                libraryItem,
+                (photoURL: string) => { resolve(photoURL); },
+                (error: Error) => { reject(error); }
+            );
+        });
+    }
+
     getPictureFrom(source: number): Promise<string> {
         return new Promise((resolve, reject) => {
             if (!this.camera) {
@@ -49,7 +106,8 @@ export class CameraService {
                 {
                     quality: 50,
                     destinationType: this.camera.DestinationType.FILE_URI,
-                    sourceType: source
+                    sourceType: source,
+                    saveToPhotoAlbum: false, // 別で保存するため、このタイミングでは保存しない
                 }
             );
         });
@@ -59,7 +117,9 @@ export class CameraService {
         if (!/iPhone/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
-        return this.getPictureFrom(this.camera.PictureSourceType.CAMERA);
+        return this.getPictureFrom(this.camera.PictureSourceType.CAMERA)
+            .then((imageURI) => this.savePhoto(imageURI))
+            .then((libraryItem) => this.getPhotoURL(libraryItem));
     }
 
     getPictureFromAlbum(): Promise<string> {
