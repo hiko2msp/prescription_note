@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import { PrescriptionRecordViewModel } from '../prescription-record.model';
-import {PrescriptionRecordRepository} from '../../service/prescription-record.repository';
-import {BrowserCameraComponent} from '../browser-camera.component';
+import { PrescriptionRecordRepository } from '../../service/prescription-record.repository';
+import { BrowserCameraComponent } from '../browser-camera.component';
 import * as ons from 'onsenui';
 import { CameraService } from 'src/service/camera.service';
 
-// preview.tsとedit.ts共通なのでまとめたい
-const TOAST_TIMEOUT = 2000; // 2000msec
 
+// TOAST_TIMEOUTはpreview.tsとedit.ts共通なのでまとめたい
+const TOAST_TIMEOUT = 2000; // 2000msec
+const NO_DATETIME_ALERT = '日時を入力してください';
 @Component({
     selector: 'ons-page[edit]',
     templateUrl: './edit.html',
@@ -58,6 +59,13 @@ export class EditComponent implements OnInit {
         }
     }
 
+    value_check() {
+        let addDate = document.getElementById("addDate") as HTMLTextAreaElement;
+        if (!addDate.value) {
+            ons.notification.alert("日時を入力してください");
+        }
+    }
+
     // 登録完了ボタンタッチで呼び出される
     onEditEndClicked() {
         // 入力された時刻を取得してtoISOStringの形式にする
@@ -65,7 +73,7 @@ export class EditComponent implements OnInit {
         console.log("addDate -> "+ addDate.value);
 
         if(!addDate.value) {
-            ons.notification.toast('日時を入力してください', { timeout: TOAST_TIMEOUT });
+            ons.notification.alert('日時を入力してください');
         }else {
             // memoの部分を取得する
             let memoText = document.getElementById("memo") as HTMLTextAreaElement;

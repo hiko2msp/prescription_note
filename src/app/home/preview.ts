@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import { EditComponent } from './edit';
 import { PrescriptionRecordViewModel, prescriptionRecordToViewModel } from '../prescription-record.model';
-import {PrescriptionRecordRepository} from '../../service/prescription-record.repository';
-import {Subject, Observable, of} from 'rxjs';
+import { PrescriptionRecordRepository } from '../../service/prescription-record.repository';
+import { Subject, Observable, of } from 'rxjs';
 import * as op from 'rxjs/operators';
 import * as ons from 'onsenui';
 
