@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
                 this.items = records.map(prescriptionRecordToViewModel);
-                console.log("A" + this.items);
             })
             .catch(error => console.log('error', error));
         this.subscriptions.push(
@@ -39,7 +38,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
                     this.items = records.filter(x => !!x).map(prescriptionRecordToViewModel);
                     this._changeDetectorRef.detectChanges();
-                    console.log("B" + this.items);
                 })
                 .catch(error => console.log('error', error));
             })
