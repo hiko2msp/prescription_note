@@ -6,6 +6,7 @@ import {HomeComponent} from './home/home';
 import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
 import {CameraService} from 'src/service/camera.service';
+import {ListLibraryComponent} from 'src/app/list-library.component';
 
 @Component({
     selector: 'ons-page[main-tab]',
@@ -35,12 +36,7 @@ export class MainTabComponent {
                     console.log(error);
                 });
         } else if ( selectedType === 'PhotoLibrary') {
-            this._cameraService.getPictureFromAlbum()
-                .then(imagePath => {
-                    this.addPictureFile(imagePath);
-                }).catch(error => {
-                    console.log(error);
-                });
+            this._navigator.element.pushPage(ListLibraryComponent, { animation: 'lift' });
         } else {
             ons.notification.alert('カメラは使えません');
         }

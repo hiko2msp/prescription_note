@@ -1,5 +1,8 @@
 
 import { Injectable } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { DeviceReadyService } from './device-ready.service';
 export const ALBUM_NAME = 'お薬手帳アプリ';
 
 @Injectable({
@@ -9,16 +12,16 @@ export class CameraService {
     cordova: any;
     camera: any;
     library: any;
+    libraryItemSubject = new Subject<any[]>();
 
-    constructor() {
-        document.addEventListener('deviceready',
-            () => {
-                this.cordova = (window as any).cordova;
-                this.camera = (navigator as any).camera;
-                this.library = this.cordova.plugins.photoLibrary;
-            },
-            {once: true}
-        );
+    constructor(
+        private _deviceReadyService: DeviceReadyService,
+    ) {
+        this._deviceReadyService.deviceReady().subscribe(() => {
+            this.cordova = (window as any).cordova;
+            this.camera = (navigator as any).camera;
+            this.library = this.cordova.plugins.photoLibrary;
+        });
     }
 
     getPhotoLibPermission() {
@@ -26,7 +29,7 @@ export class CameraService {
             if (!this.cordova) {
                 reject();
             }
-            this.cordova.plugins.photoLibrary.requestAuthorization(
+            this.library.requestAuthorization(
                 () => { resolve(); },
                 (err) => {
                     console.log('error:', err);
@@ -41,25 +44,31 @@ export class CameraService {
         });
     }
 
-    getLibrary() {
-        if (!this.library) {
-            console.log('library not found');
-            return;
-        }
-        this.library.getLibrary(
-            (chunk: any) => {
-                console.log('chunk', chunk);
-            },
-            (err: any) => {
-                this.library.requestAuthorization(
-                    () => {},
-                    (err2: any) => {console.log(err2); },
-                    {read: true, write: true}
+    getLibrary(): Observable<any[]> {
+        return this._deviceReadyService.deviceReady().pipe(
+            switchMap(() => {
+                let acc: any = [];
+                this.library.getLibrary(
+                    (chunk: any) => {
+                        console.log('chunk', chunk);
+                        acc = [...acc, ...chunk.library];
+                        console.log(acc);
+                        this.libraryItemSubject.next(acc);
+                    },
+                    (err: any) => {
+                        if (err.startsWith('Permission')) {
+                            this.library.getPhotoLibPermission();
+                        }
+                    },
+                    {
+                        chunkTimeSec: 0.3,
+                        thumbnailWidth: 90,
+                        thumbnailHeight: 90,
+                        maxItems: 20,
+                    }
                 );
-            },
-            {
-                chunkTimeSec: 0.3
-            }
+                return this.libraryItemSubject.asObservable();
+            })
         );
     }
 
