@@ -48,6 +48,21 @@
             </array>
         </config-file>
         <preference name="orientation" value="portrait" />
+        <icon height="180" src="src/assets/icon/ios/icon-60@3x.png" width="180" />
+        <icon height="60" src="src/assets/icon/ios/icon-60.png" width="60" />
+        <icon height="120" src="src/assets/icon/ios/icon-60@2x.png" width="120" />
+        <icon height="76" src="src/assets/icon/ios/icon-76.png" width="76" />
+        <icon height="152" src="src/assets/icon/ios/icon-76@2x.png" width="152" />
+        <icon height="40" src="src/assets/icon/ios/icon-40.png" width="40" />
+        <icon height="80" src="src/assets/icon/ios/icon-40@2x.png" width="80" />
+        <icon height="57" src="src/assets/icon/ios/icon.png" width="57" />
+        <icon height="114" src="src/assets/icon/ios/icon@2x.png" width="114" />
+        <icon height="72" src="src/assets/icon/ios/icon-72.png" width="72" />
+        <icon height="144" src="src/assets/icon/ios/icon-72@2x.png" width="144" />
+        <icon height="29" src="src/assets/icon/ios/icon-small.png" width="29" />
+        <icon height="58" src="src/assets/icon/ios/icon-small@2x.png" width="58" />
+        <icon height="50" src="src/assets/icon/ios/icon-50.png" width="50" />
+        <icon height="100" src="src/assets/icon/ios/icon-50@2x.png" width="100" />
     </platform>
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
