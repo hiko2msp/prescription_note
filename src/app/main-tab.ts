@@ -28,6 +28,8 @@ export class MainTabComponent {
     onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
 
+        this._cameraService.getPhotoLibPermission();
+
         if ( selectedType === 'Camera' ) {
             this._cameraService.getPictureFromCamera()
                 .then(imagePath => {
