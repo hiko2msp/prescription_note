@@ -2,13 +2,16 @@
   <div class="center">お薬手帳</div>
 </ons-toolbar>
 
-<ons-list-item expandable *ngIf="!items" class="list-item">
+<ons-list-item expandable *ngIf="items.length == 0" class="list-item">
   <div class="heading center">
     <div class="heading-container">
       <div class="heading-container__num">No. 0</div>
       <div class="heading-container__date">2020年01月01日 00:00</div>
     </div>
-    <span class="heading__memo">記録がありません。<br>右下の追加アイコンから追加してください。</span>
+    <span class="heading__memo">
+      記録がありません。<br>
+      右下の追加アイコンから追加してください。
+    </span>
   </div>
 </ons-list-item>
 
