@@ -6,7 +6,6 @@ import {HomeComponent} from './home/home';
 import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
 import {CameraService} from 'src/service/camera.service';
-import {ListLibraryComponent} from 'src/app/list-library.component';
 
 @Component({
     selector: 'ons-page[main-tab]',
@@ -28,12 +27,9 @@ export class MainTabComponent {
     onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
 
-        this._cameraService.getPhotoLibPermission();
-
         if ( selectedType === 'Camera' ) {
             this._cameraService.getPictureFromCamera()
                 .then(imagePath => {
-                    console.log('imagePath', imagePath);
                     this.addPictureFile(imagePath);
                 }).catch(error => {
                     console.log(error);
@@ -41,7 +37,6 @@ export class MainTabComponent {
         } else if ( selectedType === 'PhotoLibrary') {
             this._cameraService.getPictureFromAlbum()
                 .then(imagePath => {
-                    console.log('imagePath', imagePath);
                     this.addPictureFile(imagePath);
                 }).catch(error => {
                     console.log(error);
@@ -51,7 +46,7 @@ export class MainTabComponent {
         }
     }
 
-    addPictureFile(imageURI) {
+    addPictureFile(imageURI: string) {
         Promise.resolve()
             .then(() =>
                 this._prescriptionRecordRepository.addRecord({

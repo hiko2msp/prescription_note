@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListLibraryComponent } from './list-library.component';
 import { MainTabComponent } from './main-tab';
 import { BrowserCameraComponent } from './browser-camera.component';
 import { HomeComponent } from './home/home';
@@ -37,7 +36,6 @@ const components = [
     SettingComponent,
     SettingMainComponent,
     RegulationComponent,
-    ListLibraryComponent,
 ];
 
 @NgModule({
