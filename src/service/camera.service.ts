@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { DeviceReadyService } from './device-ready.service';
+import { FileService } from './file.service';
 export const ALBUM_NAME = 'お薬手帳アプリ';
 
 @Injectable({
@@ -16,6 +17,7 @@ export class CameraService {
 
     constructor(
         private _deviceReadyService: DeviceReadyService,
+        private _fileService: FileService,
     ) {
         this._deviceReadyService.deviceReady().subscribe(() => {
             this.cordova = (window as any).cordova;
@@ -117,6 +119,7 @@ export class CameraService {
                     destinationType: this.camera.DestinationType.FILE_URI,
                     sourceType: source,
                     saveToPhotoAlbum: false, // 別で保存するため、このタイミングでは保存しない
+                    encodingType: this.camera.EncodingType.JPEG,
                 }
             );
         });
@@ -126,15 +129,17 @@ export class CameraService {
         if (!/iPhone/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
+        const filename: string = Date.now() + '.jpg';
         return this.getPictureFrom(this.camera.PictureSourceType.CAMERA)
-            .then((imageURI) => this.savePhoto(imageURI))
-            .then((libraryItem) => this.getPhotoURL(libraryItem));
+            .then((imageURI) => this._fileService.copyImage(imageURI, filename));
     }
 
     getPictureFromAlbum(): Promise<string> {
         if (!/iPhone/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
-        return this.getPictureFrom(this.camera.PictureSourceType.SAVEDPHOTOALBUM);
+        const filename: string = Date.now() + '.jpg';
+        return this.getPictureFrom(this.camera.PictureSourceType.SAVEDPHOTOALBUM)
+            .then((imageURI) => this._fileService.copyImage(imageURI, filename));
     }
 }

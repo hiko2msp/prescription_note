@@ -33,12 +33,19 @@ export class MainTabComponent {
         if ( selectedType === 'Camera' ) {
             this._cameraService.getPictureFromCamera()
                 .then(imagePath => {
+                    console.log('imagePath', imagePath);
                     this.addPictureFile(imagePath);
                 }).catch(error => {
                     console.log(error);
                 });
         } else if ( selectedType === 'PhotoLibrary') {
-            this._navigator.element.pushPage(ListLibraryComponent, { animation: 'lift' });
+            this._cameraService.getPictureFromAlbum()
+                .then(imagePath => {
+                    console.log('imagePath', imagePath);
+                    this.addPictureFile(imagePath);
+                }).catch(error => {
+                    console.log(error);
+                });
         } else {
             ons.notification.alert('カメラは使えません');
         }

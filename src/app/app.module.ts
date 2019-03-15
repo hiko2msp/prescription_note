@@ -18,6 +18,7 @@ import { RegulationComponent } from './setting/regulation/regulation.component';
 import { PrescriptionRecordRepository } from '../service/prescription-record.repository';
 import { CameraService } from '../service/camera.service';
 import { DeviceReadyService } from '../service/device-ready.service';
+import { FileService } from '../service/file.service';
 import { OnsenModule } from 'ngx-onsenui';
 import { CDVPhotoLibraryPipe } from '../pipe/cdvphotolibrary.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -55,6 +56,7 @@ const components = [
         PrescriptionRecordRepository,
         CameraService,
         DeviceReadyService,
+        FileService,
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
