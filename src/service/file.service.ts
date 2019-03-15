@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { DeviceReadyService } from './device-ready.service';
+import { directiveInject } from '@angular/core/src/render3';
 
 type FileEntry = any;
 type DirectoryEntry = any;
@@ -24,7 +25,7 @@ export class FileService {
     async getDirectory(): Promise<string> {
         return new Promise((resolve, reject) => {
             this._deviceReadyService.deviceReady().subscribe(() => {
-                resolve(this.file.documentsDirectory);
+                resolve('cdvfile://localhost/persistent/');
             });
         });
     }

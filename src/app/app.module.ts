@@ -19,7 +19,7 @@ import { CameraService } from '../service/camera.service';
 import { DeviceReadyService } from '../service/device-ready.service';
 import { FileService } from '../service/file.service';
 import { OnsenModule } from 'ngx-onsenui';
-import { CDVPhotoLibraryPipe } from '../pipe/cdvphotolibrary.pipe';
+import { CDVFile } from '../pipe/cdvfile.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OrderByPipe } from './descending_order';
 
@@ -43,7 +43,7 @@ const components = [
     declarations: [
         ...components,
         OrderByPipe,
-        CDVPhotoLibraryPipe,
+        CDVFile,
     ],
     imports: [
         BrowserModule,
