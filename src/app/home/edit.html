@@ -20,7 +20,7 @@
 
   <p>
     <label class="inputHeading" for="addDate">保存日</label>
-    <input id="addDate" class="inputArea" type="datetime-local" value="{{item.date | date:'yyyy-MM-ddTHH:mm'}}" (blur)="value_check();">
+    <input id="addDate" class="inputArea" type="datetime-local" value="{{item.date | date:'yyyy-MM-ddTHH:mm'}}" required (blur)="value_check();">
   </p>
 
   <div class="imgPreview">
