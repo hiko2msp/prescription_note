@@ -25,7 +25,7 @@
   </div>
   <div class="expandable-content">
     <div class="expandable-photo-container">
-      <img class="expandable-photo-container__photo" src="{{item.image}}" (click)="onItemClicked(item)">
+      <img class="expandable-photo-container__photo" [src]="item.image | cdvphotolibrary" (click)="onItemClicked(item)">
       <i class="expandable-photo-container__check-icon far fa-eye"></i>
     </div>
   </div>

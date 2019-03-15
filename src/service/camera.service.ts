@@ -1,5 +1,9 @@
 
 import { Injectable } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { DeviceReadyService } from './device-ready.service';
+export const ALBUM_NAME = 'お薬手帳アプリ';
 
 @Injectable({
     providedIn: 'root'
@@ -7,23 +11,25 @@ import { Injectable } from '@angular/core';
 export class CameraService {
     cordova: any;
     camera: any;
+    library: any;
+    libraryItemSubject = new Subject<any[]>();
 
-    constructor() {
-        document.addEventListener('deviceready',
-            () => {
-                this.camera = (navigator as any).camera;
-            },
-            {once: true}
-        );
+    constructor(
+        private _deviceReadyService: DeviceReadyService,
+    ) {
+        this._deviceReadyService.deviceReady().subscribe(() => {
+            this.cordova = (window as any).cordova;
+            this.camera = (navigator as any).camera;
+            this.library = this.cordova.plugins.photoLibrary;
+        });
     }
 
     getPhotoLibPermission() {
         return new Promise((resolve, reject) => {
-            console.log(this.cordova);
             if (!this.cordova) {
                 reject();
             }
-            this.cordova.plugins.photoLibrary.requestAuthorization(
+            this.library.requestAuthorization(
                 () => { resolve(); },
                 (err) => {
                     console.log('error:', err);
@@ -34,6 +40,66 @@ export class CameraService {
                     read: true,
                     write: true
                 }
+            );
+        });
+    }
+
+    getLibrary(): Observable<any[]> {
+        return this._deviceReadyService.deviceReady().pipe(
+            switchMap(() => {
+                let acc: any = [];
+                this.library.getLibrary(
+                    (chunk: any) => {
+                        console.log('chunk', chunk);
+                        acc = [...acc, ...chunk.library];
+                        console.log(acc);
+                        this.libraryItemSubject.next(acc);
+                    },
+                    (err: any) => {
+                        if (err.startsWith('Permission')) {
+                            this.library.getPhotoLibPermission();
+                        }
+                    },
+                    {
+                        chunkTimeSec: 0.3,
+                        thumbnailWidth: 90,
+                        thumbnailHeight: 90,
+                        maxItems: 20,
+                    }
+                );
+                return this.libraryItemSubject.asObservable();
+            })
+        );
+    }
+
+    savePhoto(imageURI: string): Promise<any> {
+        if (!this.library) {
+            return Promise.reject();
+        }
+
+        return new Promise((resolve, reject) => {
+            this.library.saveImage(
+                imageURI,
+                ALBUM_NAME,
+                (libraryItem: any) => {
+                    resolve(libraryItem);
+                },
+                (err: Error) => {
+                    reject(err);
+                });
+        });
+    }
+
+    getPhotoURL(libraryItem: any): Promise<string> {
+        if (!this.library) {
+            return Promise.reject();
+        }
+
+        return new Promise((resolve, reject) => {
+            this.library.getPhotoURL(
+                libraryItem,
+                (photoURL: string) => { resolve(photoURL); },
+                (error: Error) => { reject(error); }
             );
         });
     }
@@ -49,7 +115,8 @@ export class CameraService {
                 {
                     quality: 50,
                     destinationType: this.camera.DestinationType.FILE_URI,
-                    sourceType: source
+                    sourceType: source,
+                    saveToPhotoAlbum: false, // 別で保存するため、このタイミングでは保存しない
                 }
             );
         });
@@ -59,7 +126,9 @@ export class CameraService {
         if (!/iPhone/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
-        return this.getPictureFrom(this.camera.PictureSourceType.CAMERA);
+        return this.getPictureFrom(this.camera.PictureSourceType.CAMERA)
+            .then((imageURI) => this.savePhoto(imageURI))
+            .then((libraryItem) => this.getPhotoURL(libraryItem));
     }
 
     getPictureFromAlbum(): Promise<string> {

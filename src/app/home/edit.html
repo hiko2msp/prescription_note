@@ -24,8 +24,8 @@
   </p>
 
   <div class="imgPreview">
-    <img class="imgPreview__img" src="{{item.image}}" (click)="actionSheet.show()">
-     <i class="imgPreview__edit-icon far fa-edit" (click)="actionSheet.show()"></i>
+    <img class="imgPreview__img" [src]="item.image | cdvphotolibrary" (click)="actionSheet.show()">
+    <i class="imgPreview__edit-icon far fa-edit" (click)="actionSheet.show()"></i>
   </div>
 
   <p class="updateButton" (click)="onEditEndClicked()">
