@@ -6,7 +6,6 @@ import {HomeComponent} from './home/home';
 import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
 import {CameraService} from 'src/service/camera.service';
-import {ListLibraryComponent} from 'src/app/list-library.component';
 
 @Component({
     selector: 'ons-page[main-tab]',
@@ -28,8 +27,6 @@ export class MainTabComponent {
     onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
 
-        this._cameraService.getPhotoLibPermission();
-
         if ( selectedType === 'Camera' ) {
             this._cameraService.getPictureFromCamera()
                 .then(imagePath => {
@@ -38,13 +35,18 @@ export class MainTabComponent {
                     console.log(error);
                 });
         } else if ( selectedType === 'PhotoLibrary') {
-            this._navigator.element.pushPage(ListLibraryComponent, { animation: 'lift' });
+            this._cameraService.getPictureFromAlbum()
+                .then(imagePath => {
+                    this.addPictureFile(imagePath);
+                }).catch(error => {
+                    console.log(error);
+                });
         } else {
             ons.notification.alert('カメラは使えません');
         }
     }
 
-    addPictureFile(imageURI) {
+    addPictureFile(imageURI: string) {
         Promise.resolve()
             .then(() =>
                 this._prescriptionRecordRepository.addRecord({

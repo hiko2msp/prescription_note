@@ -15,7 +15,7 @@
 <div class="previewContents">
   <p>
     <label class="inputHeading" for="memo">メモ</label>
-    <input type="text" id="memo" class="inputArea" maxlength="50" size="25" value="{{item.memo}}" placeholder="コメントを入力">
+    <textarea id="memo" class="inputArea">{{item.memo}}</textarea>
   </p>
 
   <p>
@@ -24,7 +24,7 @@
   </p>
 
   <div class="imgPreview">
-    <img class="imgPreview__img" [src]="item.image | cdvphotolibrary" (click)="actionSheet.show()">
+    <img class="imgPreview__img" [src]="item.image | cdvfile" (click)="actionSheet.show()">
     <i class="imgPreview__edit-icon far fa-edit" (click)="actionSheet.show()"></i>
   </div>
 

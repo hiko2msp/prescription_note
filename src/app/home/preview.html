@@ -32,7 +32,7 @@
   </dl>
 
   <div class="imgPreview">
-    <img class="imgPreview__img" [src]="(item$ | async).image | cdvphotolibrary">
+    <img class="imgPreview__img" [src]="(item$ | async).image | cdvfile">
   </div>
 
   <ons-button class="deleteButton" (click)="onDeleteClicked()" modifier="large">削除</ons-button>
