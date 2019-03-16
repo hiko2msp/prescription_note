@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { PrescriptionRecord } from '../app/prescription-record.model';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { DeviceReadyService } from './device-ready.service';
 
 
 type RecordChangeStatue = 'add' | 'initial' | 'update' | 'updateImage' | 'delete';
@@ -14,7 +15,9 @@ export class PrescriptionRecordRepository {
     recordChangeStream = new BehaviorSubject<RecordChangeStatue>('initial');
 
     private _database = null;
-    constructor() {
+    constructor(
+        private _deviceReadyService: DeviceReadyService
+    ) {
         this.createDatabase().then(() => {
             this._database.transaction(
                 (tx) => {
@@ -43,16 +46,16 @@ export class PrescriptionRecordRepository {
     }
 
     createDatabase(): Promise<void> {
-        if (/iPhone/.test(navigator.userAgent)) {
+        if (this._deviceReadyService.isSmartPhone()) {
             return new Promise((resolve, reject) => {
-                document.addEventListener('deviceready', () => {
+                this._deviceReadyService.deviceReady().subscribe(() => {
                     this._database = (window as any).sqlitePlugin.openDatabase({
                         name: DATABASE_NAME,
                         location: 'default',
                         androidDatabaseProvider: 'system'
                     });
                     resolve();
-                }, {once: true});
+                });
             });
         } else {
             // ブラウザでの動作確認用
@@ -117,7 +120,7 @@ export class PrescriptionRecordRepository {
                             resolve(true);
                             this.recordChangeStream.next('update');
                         },
-                        (_, error: Error) => { reject(false); }
+                        (_, error: Error) => { reject(error); }
                     );
                 }
             );

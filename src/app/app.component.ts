@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { MainTabComponent } from './main-tab';
+import { Component } from '@angular/core'; import { MainTabComponent } from './main-tab';
+import { DeviceReadyService } from 'src/service/device-ready.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  page = MainTabComponent;
+    page = MainTabComponent;
 
-  isSmartPhone() {
-    return /iPad|iPhone|Android/i.test(navigator.userAgent);
-  }
+    constructor(
+        private _deviceReadyService: DeviceReadyService,
+    ) {}
 }

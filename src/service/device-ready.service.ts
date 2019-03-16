@@ -17,6 +17,10 @@ export class DeviceReadyService {
         );
     }
 
+    isSmartPhone() {
+        return /iPad|iPhone|Android/i.test(navigator.userAgent);
+    }
+
     deviceReady(): Observable<boolean> {
         return this.deviceReadySubject.asObservable().pipe(
             filter(x => !!x),
