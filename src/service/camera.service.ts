@@ -41,7 +41,7 @@ export class CameraService {
     }
 
     async getPictureFromCamera(): Promise<string> {
-        if (!/iPhone/.test(navigator.userAgent)) {
+        if (!this._deviceReadyService.isSmartPhone()) {
             return Promise.resolve('assets/img/test.jpeg');
         }
         const filename: string = Date.now() + '.jpg';
@@ -50,7 +50,7 @@ export class CameraService {
     }
 
     async getPictureFromAlbum(): Promise<string> {
-        if (!/iPhone/.test(navigator.userAgent)) {
+        if (!this._deviceReadyService.isSmartPhone()) {
             return Promise.resolve('assets/img/test.jpeg');
         }
         const filename: string = Date.now() + '.jpg';
