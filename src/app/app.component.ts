@@ -8,8 +8,4 @@ import { DeviceReadyService } from 'src/service/device-ready.service';
 })
 export class AppComponent {
     page = MainTabComponent;
-
-    constructor(
-        private _deviceReadyService: DeviceReadyService,
-    ) {}
 }

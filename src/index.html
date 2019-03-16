@@ -7,6 +7,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-eval' 'unsafe-inline' gap://ready file:; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data: file: filesystem: blob: cdvfile: content:;" />
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- これがないとonDeviceReadyが起動しない -->
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 </head>
 <body>
   <app-root></app-root>
