@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListLibraryComponent } from './list-library.component';
 import { MainTabComponent } from './main-tab';
 import { BrowserCameraComponent } from './browser-camera.component';
 import { HomeComponent } from './home/home';
@@ -18,8 +17,9 @@ import { RegulationComponent } from './setting/regulation/regulation.component';
 import { PrescriptionRecordRepository } from '../service/prescription-record.repository';
 import { CameraService } from '../service/camera.service';
 import { DeviceReadyService } from '../service/device-ready.service';
+import { FileService } from '../service/file.service';
 import { OnsenModule } from 'ngx-onsenui';
-import { CDVPhotoLibraryPipe } from '../pipe/cdvphotolibrary.pipe';
+import { CDVFile } from '../pipe/cdvfile.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OrderByPipe } from './descending_order';
 
@@ -36,7 +36,6 @@ const components = [
     SettingComponent,
     SettingMainComponent,
     RegulationComponent,
-    ListLibraryComponent,
 ];
 
 @NgModule({
@@ -44,7 +43,7 @@ const components = [
     declarations: [
         ...components,
         OrderByPipe,
-        CDVPhotoLibraryPipe,
+        CDVFile,
     ],
     imports: [
         BrowserModule,
@@ -55,6 +54,7 @@ const components = [
         PrescriptionRecordRepository,
         CameraService,
         DeviceReadyService,
+        FileService,
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

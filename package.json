@@ -60,7 +60,8 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-camera": {},
       "cordova-sqlite-storage": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "ios"
