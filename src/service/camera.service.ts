@@ -123,7 +123,7 @@ export class CameraService {
     }
 
     getPictureFromCamera(): Promise<string> {
-        if (!/iPhone/.test(navigator.userAgent)) {
+        if (!/iPhone|iPad/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
         return this.getPictureFrom(this.camera.PictureSourceType.CAMERA)
@@ -132,7 +132,7 @@ export class CameraService {
     }
 
     getPictureFromAlbum(): Promise<string> {
-        if (!/iPhone/.test(navigator.userAgent)) {
+        if (!/iPhone|iPad/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
         return this.getPictureFrom(this.camera.PictureSourceType.SAVEDPHOTOALBUM);
