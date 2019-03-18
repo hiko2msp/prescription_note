@@ -3,7 +3,8 @@
 .previewContents{
   background: #FFF5FF;
   padding: 1em 2em;
-  height: 100%;
+  height: auto;
+  min-height: 100%;
 }
 .inputHeading{
   color: #FF6B2A;
