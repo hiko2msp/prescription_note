@@ -20,7 +20,7 @@ import {Subscription} from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
-    items: PrescriptionRecordViewModel[];
+    items: PrescriptionRecordViewModel[] = [];
 
     constructor(
         private _navigator: OnsNavigator,

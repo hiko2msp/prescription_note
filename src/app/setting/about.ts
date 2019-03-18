@@ -1,20 +1,36 @@
-import {Component} from '@angular/core';
-import {OnsNavigator} from 'ngx-onsenui';
+import { Component, OnInit } from '@angular/core';
+import { OnsNavigator } from 'ngx-onsenui';
+import { DeviceReadyService } from 'src/service/device-ready.service';
 
 @Component({
-  selector: 'ons-page[about]',
-  templateUrl: './about.html',
-  styles: ['./about.css']
+    selector: 'ons-page[about]',
+    templateUrl: './about.html',
+    styleUrls: ['./about.css']
 })
-export class AboutComponent {
-  constructor(
-    private _navigator: OnsNavigator,
-  ) {}
+export class AboutComponent implements OnInit {
 
-  onCloseClicked() {
-    this._navigator.element.popPage({
-      animation: 'simpleslide',
-    });
-  }
+    currentVersion = 'X.X.X';
+
+    constructor(
+        private _navigator: OnsNavigator,
+        private _deviceReadyService: DeviceReadyService,
+    ) { }
+
+    ngOnInit() {
+        this._deviceReadyService.deviceReady().subscribe(() => {
+            if ((window as any).cordova) {
+                (window as any).cordova.getAppVersion.getVersionNumber().then((version) => {
+                    console.log(version);
+                    this.currentVersion = version;
+                });
+            }
+        });
+    }
+
+    onCloseClicked() {
+        this._navigator.element.popPage({
+            animation: 'simpleslide',
+        });
+    }
 
 }
