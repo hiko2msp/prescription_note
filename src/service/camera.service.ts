@@ -122,8 +122,8 @@ export class CameraService {
         });
     }
 
-    getPictureFromCamera(): Promise<string> {
-        if (!/iPhone/.test(navigator.userAgent)) {
+    async getPictureFromCamera(): Promise<string> {
+        if (!/iPhon|iPad/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
         return this.getPictureFrom(this.camera.PictureSourceType.CAMERA)
@@ -131,8 +131,8 @@ export class CameraService {
             .then((libraryItem) => this.getPhotoURL(libraryItem));
     }
 
-    getPictureFromAlbum(): Promise<string> {
-        if (!/iPhone/.test(navigator.userAgent)) {
+    async getPictureFromAlbum(): Promise<string> {
+        if (!/iPhone|iPad/.test(navigator.userAgent)) {
             return Promise.resolve('assets/img/test.jpeg');
         }
         return this.getPictureFrom(this.camera.PictureSourceType.SAVEDPHOTOALBUM);

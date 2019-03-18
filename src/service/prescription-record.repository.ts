@@ -43,7 +43,7 @@ export class PrescriptionRecordRepository {
     }
 
     createDatabase(): Promise<void> {
-        if (/iPhone/.test(navigator.userAgent)) {
+        if (/iPhone|iPad/.test(navigator.userAgent)) {
             return new Promise((resolve, reject) => {
                 document.addEventListener('deviceready', () => {
                     this._database = (window as any).sqlitePlugin.openDatabase({
