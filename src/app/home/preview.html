@@ -22,7 +22,7 @@
   </div>
 </ons-toolbar>
 
-<div class="previewContents" (swiperight)="onCloseClicked()">
+<div class="previewContents" (swiperight)="onCloseClicked()" (doubletap)="onEditClicked()">
   <dl class="definitionList">
     <dt class="definitionList__term">メモ</dt>
     <dd class="definitionList__description">{{(item$ | async).memo}}</dd>
