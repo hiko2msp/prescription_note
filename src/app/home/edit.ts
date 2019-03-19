@@ -30,7 +30,6 @@ export class EditComponent implements OnInit {
 
     ngOnInit() {
         this.item = this.params.data;
-        console.log(this.item);
     }
 
     onCloseClicked() {
