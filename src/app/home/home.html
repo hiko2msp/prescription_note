@@ -5,8 +5,7 @@
 <ons-list-item expandable *ngIf="items.length == 0" class="list-item">
   <div class="heading center">
     <div class="heading-container">
-      <div class="heading-container__num">No. 0</div>
-      <div class="heading-container__date">2020年01月01日 00:00</div>
+      <div class="heading-container__date">2020/01/01 00:00</div>
     </div>
     <span class="heading__memo">
       記録がありません。<br>
@@ -15,11 +14,10 @@
   </div>
 </ons-list-item>
 
-<ons-list-item expandable *ngFor="let item of items | orderBy:'id'" class="list-item">
+<ons-list-item expandable *ngFor="let item of items | orderBy:'date'" class="list-item">
   <div class="heading center">
     <div class="heading-container">
-      <div class="heading-container__num">No. {{item.id}}</div>
-      <div class="heading-container__date">{{item.date | date:'yyyy年MM月dd日 HH:mm'}}</div>
+      <div class="heading-container__date">{{item.date | date:'yyyy/MM/dd HH:mm'}}</div>
     </div>
     <span class="heading__memo">{{item.memo}}</span>
   </div>
