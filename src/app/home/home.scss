@@ -19,19 +19,13 @@
 }
 
 .heading-container {
-  width: 96%;
-  border-bottom:4px dotted #FF6B2A;
+  width: 100%;
+  border-bottom: 4px dotted #FF6B2A;
   margin-bottom: 10px;
-  &__num {
-    color: #FF6B2A;
-    font-weight: bold;
-    float: left;
-    font-size: 1.2em;
-  }
   &__date {
     color: #FF6B2A;
     font-weight: bold;
-    text-align: right;
+    text-align: left;
     font-size: 1.2em;
     &::after{
       content: "";
