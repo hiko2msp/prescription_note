@@ -6,6 +6,8 @@ import {HomeComponent} from './home/home';
 import {SettingComponent} from './setting/setting';
 import {PrescriptionRecordRepository} from '../service/prescription-record.repository';
 import {CameraService} from 'src/service/camera.service';
+import {PrescriptionRecord, prescriptionRecordToViewModel} from '../app/prescription-record.model';
+import {EditComponent} from './home/edit';
 
 @Component({
     selector: 'ons-page[main-tab]',
@@ -29,16 +31,22 @@ export class MainTabComponent {
 
         if ( selectedType === 'Camera' ) {
             this._cameraService.getPictureFromCamera()
-                .then(imagePath => {
-                    this.addPictureFile(imagePath);
-                }).catch(error => {
+                .then(imagePath => this.addPictureFile(imagePath))
+                .then((record: PrescriptionRecord) => {
+                    this._navigator.element.pushPage(EditComponent,
+                        { animation: 'simpleslide', data: prescriptionRecordToViewModel(record) });
+                })
+                .catch(error => {
                     console.log(error);
                 });
         } else if ( selectedType === 'PhotoLibrary') {
             this._cameraService.getPictureFromAlbum()
-                .then(imagePath => {
-                    this.addPictureFile(imagePath);
-                }).catch(error => {
+                .then(imagePath => this.addPictureFile(imagePath))
+                .then((record: PrescriptionRecord) => {
+                    this._navigator.element.pushPage(EditComponent,
+                        { animation: 'simpleslide', data: prescriptionRecordToViewModel(record) });
+                })
+                .catch(error => {
                     console.log(error);
                 });
         } else {
@@ -46,20 +54,14 @@ export class MainTabComponent {
         }
     }
 
-    addPictureFile(imageURI: string) {
-        Promise.resolve()
-            .then(() =>
-                this._prescriptionRecordRepository.addRecord({
-                    id: null,
-                    createdDate: new Date().toISOString(),
-                    updatedDate: new Date().toISOString(),
-                    imagePath: imageURI,
-                    note: '',
-                }))
-            .then(result => this._prescriptionRecordRepository.getRecords())
-            .then(result => {
-                console.log('record', result);
-            })
-            .catch(error => console.log('error', error));
+    async addPictureFile(imageURI: string): Promise<PrescriptionRecord> {
+        await this._prescriptionRecordRepository.addRecord({
+            id: null,
+            createdDate: new Date().toISOString(),
+            updatedDate: new Date().toISOString(),
+            imagePath: imageURI,
+            note: '',
+        });
+        return this._prescriptionRecordRepository.getLatestRecord();
     }
 }

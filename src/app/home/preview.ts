@@ -17,7 +17,7 @@ const TOAST_TIMEOUT = 2000; // 2000msec
         './preview.scss'
     ]
 })
-export class PreviewComponent implements OnInit, OnDestroy {
+export class PreviewComponent implements OnInit {
 
     itemId: string;
     itemIdSubject: Subject<string> = new Subject<string>();
@@ -35,10 +35,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
             op.map(prescriptionRecordToViewModel),
             op.startWith({id: null, image: null, date: null, memo: null}),
         );
-    }
-
-    ngOnDestroy() {
-        console.log('on destroy');
     }
 
     onEditClicked() {
