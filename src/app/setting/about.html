@@ -2,7 +2,7 @@
   <div class="left" (click)="onCloseClicked()"><ons-toolbar-button><ons-icon icon="fa-backward"></ons-icon></ons-toolbar-button></div>
   <div class="center">このアプリについて</div>
 </ons-toolbar>
-<div class="content">
+<div class="content" (swiperight)="onCloseClicked()">
   <div class="version">
     <h5 class="heading">アプリバージョン</h5>
     <div class="version__content">{{currentVersion}}</div>
