@@ -1,9 +1,9 @@
 <div class="content">
-  <ons-tabbar [attr.animation]="animation" position="auto">
+  <ons-tabbar [attr.animation]="animation" position="bottom">
     <div class="tabbar__content"></div>
     <div class="tabbar">
       <ons-tab icon="fa-wrench" label="設定" [page]="setting"></ons-tab>
-      <ons-tab icon="fa-home" label="ホーム" [page]="home" active></ons-tab>
+      <ons-tab icon="fa-home" label="ホーム" [page]="home" active="true"></ons-tab>
       <ons-tab icon="fa-camera" label="追加" (click)="actionSheet.show()"></ons-tab>
     </div>
   </ons-tabbar>
