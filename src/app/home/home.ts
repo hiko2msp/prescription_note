@@ -38,8 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this._prescriptionRecordRepository.getRecords().then((records: PrescriptionRecord[]) => {
                     this.items = records
                         .filter(x => !!x)
-                        .map(prescriptionRecordToViewModel)
-                        .sort((a: PrescriptionRecordViewModel, b: PrescriptionRecordViewModel) => a.date.getTime() - b.date.getTime());
+                        .map(prescriptionRecordToViewModel);
                     this._changeDetectorRef.detectChanges();
                 })
                 .catch(error => console.log('error', error));

@@ -14,7 +14,7 @@
   </div>
 </ons-list-item>
 
-<ons-list-item expandable *ngFor="let item of items | orderBy:'id'" class="list-item">
+<ons-list-item expandable *ngFor="let item of items | orderBy:'date'" class="list-item">
   <div class="heading center">
     <div class="heading-container">
       <div class="heading-container__date">{{item.date | date:'yyyy/MM/dd HH:mm'}}</div>
