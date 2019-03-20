@@ -55,6 +55,10 @@
     }
   }
 
+  ons-list-item[data-existence="false"]  .list-item__expand-chevron {
+    display:none;
+  }
+
   .list-item--expandable{
     .list-item__expand-chevron::before {
       content: "";
