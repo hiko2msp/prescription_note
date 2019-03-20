@@ -30,9 +30,12 @@ export class MainTabComponent {
 
     beforeMount() {
         const html = document.documentElement;
-            if (ons.platform.isIPhoneX()) {
-                html.setAttribute('onsflag-iphonex-portrait', '');
-        }
+            if (!ons.platform.isIPhoneX()) {
+                alert('not iPhoneX');
+            } else {
+                alert('iPhoneX');
+                html.setAttribute('onsflag-iphonex-portrait', 'true');
+            }
     }
 
     onPlusButtonClick(event: Event, selectedType: string) {
