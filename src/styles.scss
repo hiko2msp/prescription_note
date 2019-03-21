@@ -1,8 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 /* Header area  */
+$header-height: 40px; //headerの幅
+
 .toolbar {
   background: #46AAFF;
+  height: $header-height;
+  +.page__background {
+    top: $header-height;
+  }
 }
+
 .toolbar__title {
   color: #fff;
   font-weight: bold;
