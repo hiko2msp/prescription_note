@@ -24,7 +24,17 @@ export class MainTabComponent {
         private _prescriptionRecordRepository: PrescriptionRecordRepository,
         private _navigator: OnsNavigator,
         private _cameraService: CameraService,
-    ) {}
+    ) {
+        this.beforeMount();
+    }
+
+    beforeMount() {
+        const html = document.documentElement;
+            if (!ons.platform.isIPhoneX()) {
+            } else {
+                html.setAttribute('onsflag-iphonex-portrait', 'true');
+            }
+    }
 
     onPlusButtonClick(event: Event, selectedType: string) {
         event.stopPropagation();
