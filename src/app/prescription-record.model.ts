@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-
 export interface PrescriptionRecord {
     id: number;
     createdDate: string;
@@ -20,14 +18,14 @@ export function prescriptionRecordToViewModel(record: PrescriptionRecord): Presc
     if (!record) {
       return {
         id: 4,
-        date: moment().toDate(),
+        date: new Date(),
         image: '',
         memo: '',
       };
     }
     return {
         id: record.id,
-        date: moment(record.createdDate).toDate(),
+        date: new Date(Date.parse(record.createdDate)),
         image: record.imagePath,
         memo: record.note,
     } as PrescriptionRecordViewModel;
