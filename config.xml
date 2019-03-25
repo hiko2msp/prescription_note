@@ -23,16 +23,16 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-            <string>need camera access to take pictures</string>
+            <string>処方箋・お薬手帳の撮影に必要です</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>need photo library access to get pictures from there</string>
+            <string>撮影した画像を保存するために必要です</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-            <string>need location access to find things nearby</string>
+            <string>カメラの位置情報を保存するために必要です</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
-            <string>need photo library access to save pictures there</string>
+            <string>撮影した画像を保存するために必要です</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleDisplayName">
             <string>お薬レコード</string>
