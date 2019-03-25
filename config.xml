@@ -25,15 +25,6 @@
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
             <string>処方箋・お薬手帳の撮影に必要です</string>
         </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>撮影した画像を保存するために必要です</string>
-        </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-            <string>カメラの位置情報を保存するために必要です</string>
-        </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
-            <string>撮影した画像を保存するために必要です</string>
-        </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleDisplayName">
             <string>お薬レコード</string>
         </edit-config>
