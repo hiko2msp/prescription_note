@@ -28,6 +28,15 @@
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleDisplayName">
             <string>お薬レコード</string>
         </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+            <string>処方箋・お薬手帳画像の選択に必要です</string>
+        </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+            <string>処方箋を記録した場所の登録に必要です</string>
+        </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
+            <string>処方箋・お薬手帳画像の保存に必要です</string>
+        </edit-config>
         <feature name="Camera">
             <param name="ios-package" value="CDVCamera" />
         </feature>
@@ -69,5 +78,5 @@
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-file" spec="~6.0.1" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <engine name="ios" spec="^4.5.5" />
+    <engine name="ios" spec="~4.5.5" />
 </widget>
