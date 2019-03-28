@@ -59,27 +59,30 @@ export class EditComponent implements OnInit {
     }
 
     value_check() {
-        let addDate = document.getElementById("addDate") as HTMLTextAreaElement;
+        const addDate = document.getElementById('addDate') as HTMLTextAreaElement;
         if (!addDate.value) {
-            ons.notification.alert("日時を入力してください");
+            ons.notification.alert('日時を入力してください');
         }
     }
 
     // 登録完了ボタンタッチで呼び出される
     onEditEndClicked() {
         // 入力された時刻を取得してtoISOStringの形式にする
-        let addDate = document.getElementById("addDate") as HTMLTextAreaElement;
-        console.log("addDate -> "+ addDate.value);
+        const addDate = document.getElementById('addDate') as HTMLTextAreaElement;
+        console.log('addDate -> ' + addDate.value);
 
-        if(!addDate.value) {
+        if (!addDate.value) {
             ons.notification.alert('日時を入力してください');
-        }else {
+        } else {
             // memoの部分を取得する
-            let memoText = document.getElementById("memo") as HTMLTextAreaElement;
+            const memoText = document.getElementById('memo') as HTMLTextAreaElement;
+
+            // 日本の時差9時間分減算
+            const currentUnixtime = new Date(addDate.value).valueOf() - 9 * 60 * 60 * 1000;
 
             this._prescriptionRecordRepository.updateRecord({
                 id: this.item.id,
-                createdDate: new Date(addDate.value).toISOString(),
+                createdDate: new Date(currentUnixtime).toISOString(),
                 updatedDate: new Date().toISOString(),
                 imagePath: this.item.image,
                 note: String(memoText.value),
