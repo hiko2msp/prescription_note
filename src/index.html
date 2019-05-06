@@ -12,5 +12,15 @@
 </head>
 <body>
   <app-root></app-root>
+
+  <script>
+    window.onload = function(){
+      cordova.plugins.notification.local.schedule({
+        title: '通知テスト',
+        text: 'ローカル通知のテストです',
+        foreground: true
+      });
+    }
+  </script>
 </body>
 </html>
