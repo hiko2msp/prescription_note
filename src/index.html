@@ -15,11 +15,15 @@
 
   <script>
     window.onload = function(){
+      let alertTime = new Date(2019, 4, 6, 23, 24); // 2019.5.6 23:24
+      console.log("alertTime -> "+ String(alertTime));
+
       cordova.plugins.notification.local.schedule({
         title: '通知テスト',
-        text: 'ローカル通知のテストです',
+        text: 'アラーム時刻設定のテストです',
+        trigger: { at: alertTime },
         foreground: true
-      });
+      });i
     }
   </script>
 </body>
