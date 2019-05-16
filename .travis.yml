@@ -9,3 +9,4 @@ before_script:
 
 script:
     - ng test
+    - ng e2e
