@@ -12,5 +12,6 @@ before_script:
     - npm install --quiet -g chromedriver
 
 script:
+    - ng lint
     - ng test
     - ng e2e
