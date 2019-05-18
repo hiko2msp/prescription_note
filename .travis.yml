@@ -11,5 +11,6 @@ before_script:
     - npm install --quiet -g karma
 
 script:
+    - ng lint
     - ng test
     - ng e2e

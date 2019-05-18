@@ -21,7 +21,7 @@ import { FileService } from '../service/file.service';
 import { OnsenModule } from 'ngx-onsenui';
 import { CDVFile } from '../pipe/cdvfile.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { OrderByPipe } from './descending_order';
+import { OrderByPipe } from './descending-order';
 
 const components = [
     AppComponent,
