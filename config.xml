@@ -73,7 +73,6 @@
         <splash src="res/screen/ios/Default@3x~universal~anycom.png" />
         <splash src="res/screen/ios/Default@3x~universal~comany.png" />
     </platform>
-    <plugin name="cordova-sqlite-storage" spec="2.6.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-file" spec="~6.0.1" />
